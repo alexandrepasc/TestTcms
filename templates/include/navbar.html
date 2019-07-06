@@ -1,6 +1,7 @@
 <div class="topnav">
     <a {% if request.view == 'home' %} class="active" {% endif %} href="{% url 'home' %}">Home</a>
-    <a href="#news">Tests</a>
+    <a {% if request.view == 'testMgr' %} class="active" {% endif %} href="{% url 'testMgr' %}">Test Mgr</a>
+    <a href="#about">Test Runs</a>
     <a href="#about">About</a>
 
     <div class="dropdownNav" style="float: right">
