@@ -23,4 +23,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^$', views.home, name='home'),
     path('', include('urls.testMgrUrl')),
+    path('', include('urls.testRunUrl')),
 ]

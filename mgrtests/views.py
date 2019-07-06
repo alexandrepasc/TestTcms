@@ -11,3 +11,9 @@ def test_mgr(request):
     setattr(request, 'view', 'testMgr')
 
     return render(request, 'testMgr.html')
+
+
+def test_run(request):
+    setattr(request, 'view', 'testRun')
+
+    return render(request, 'testRun.html')
