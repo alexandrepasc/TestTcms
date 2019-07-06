@@ -2,9 +2,9 @@
 <config>
     <database>
         <name>dbname</name>
-        <user>postgres</user>
-        <password>postgres</password>
-        <host>192.168.1.7</host>
-        <port>5432</port>
+        <user>user</user>
+        <password>password</password>
+        <host>1.1.1.1</host>
+        <port>9999</port>
     </database>
 </config>
