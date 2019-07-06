@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <database>
-        <name>dbname</name>
-        <user>user</user>
-        <password>password</password>
-        <host>8.8.8.8</host>
-        <port>8888</port>
+        <name>testtcms</name>
+        <user>postgres</user>
+        <password>postgres</password>
+        <host>192.168.1.7</host>
+        <port>5432</port>
     </database>
 </config>
