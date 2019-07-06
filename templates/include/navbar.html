@@ -1,0 +1,12 @@
+<div class="topnav">
+    <a {% if request.view == 'home' %} class="active" {% endif %} href="{% url 'home' %}">Home</a>
+    <a href="#news">Tests</a>
+    <a href="#about">About</a>
+
+    <div class="dropdownNav" style="float: right">
+        <button class="dropbtn">Dropdown&nbsp;&#8681;</button>
+        <div class="dropdownNav-content">
+            <a href="#">Link 1</a>
+        </div>
+    </div>
+</div>
