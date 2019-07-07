@@ -21,3 +21,10 @@ def test_run(request):
     setattr(request, 'view', 'testRun')
 
     return render(request, 'testRun.html')
+
+
+@login_required
+def product(request):
+    setattr(request, 'view', 'product')
+
+    return render(request, 'product.html')
