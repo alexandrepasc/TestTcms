@@ -4,10 +4,16 @@
     <a {% if request.view == 'testRun' %} class="active" {% endif %} href="{% url 'testRun' %}">Test Runs</a>
     <a href="#about">About</a>
 
+    {% if user.is_authenticated %}
     <div class="dropdownNav" style="float: right">
-        <button class="dropbtn">Dropdown&nbsp;&#8681;</button>
+        <button class="dropbtn">Settings&nbsp;&#8681;</button>
         <div class="dropdownNav-content">
             <a href="#">Link 1</a>
         </div>
     </div>
+    {% else %}
+    <div style="float: right">
+        <a class="active" href="{% url 'login' %}">Login</a>
+    </div>
+    {% endif %}
 </div>

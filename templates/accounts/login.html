@@ -1,0 +1,28 @@
+{% extends 'accounts/baseAccounts.html' %}
+
+{% block cardTitle %}
+<h3 class="card-title">Log in</h3>
+{% endblock %}
+
+{% block buttons %}
+<div style="float: left;">
+    <button type="submit" class="btn btn-success">Login</button>
+</div>
+<div style="float: right;">
+    <button type="submit" class="btn btn-danger" formaction="{% url 'home' %}">Cancel</button>
+</div>
+{% endblock %}
+
+{% block footer %}
+<div class="card-footer text-muted text-center">
+    New to Django Boards? <a href="{% url 'home' %}">Sign up</a>
+</div>
+{% endblock %}
+
+{% block muted %}
+<div class="text-center py-2">
+    <small>
+        <a href="{% url 'home' %}" class="text-muted">Forgot your password?</a>
+    </small>
+</div>
+{% endblock %}

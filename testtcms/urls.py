@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^$', views.home, name='home'),
     path('', include('urls.testMgrUrl')),
     path('', include('urls.testRunUrl')),
+    path('', include('urls.loginUrl')),
 ]
