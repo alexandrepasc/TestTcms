@@ -1,13 +1,15 @@
 {% extends 'baseTemplate.html' %}
 
+{% load static %}
+
 {% block title %}
 Test Tcms
 {% endblock %}
 
 {% block content %}
 <table class="table">
-    <tr><td>
-        <button type="button" class="btn btn-primary">New</button>
+    <tr><td colspan="2">
+        <button type="button" class="btn btn-primary" onclick="hide()">New</button>
     </td></tr>
     <tr>
         <td>
@@ -17,6 +19,11 @@ Test Tcms
                 {% endfor %}
             </ul>
         </td>
+        <td>sdf</td>
     </tr>
 </table>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="{% static 'js/hideDiv.js' %}"></script>
 {% endblock %}
