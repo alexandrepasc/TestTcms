@@ -1,6 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
+from .models import Product
+
 
 @login_required
 def home(request):
@@ -25,6 +27,8 @@ def test_run(request):
 
 @login_required
 def product(request):
+    items = Product.objects.all()
+
     setattr(request, 'view', 'product')
 
-    return render(request, 'product.html')
+    return render(request, 'product.html', {'items': items})
