@@ -1,7 +1,7 @@
 {% extends 'accounts/baseAccounts.html' %}
 
 {% block cardTitle %}
-<h3 class="card-title">Log in</h3>
+<h3 class="card-title">Sign up</h3>
 {% endblock %}
 
 {% block buttons %}
@@ -15,14 +15,6 @@
 
 {% block footer %}
 <div class="card-footer text-muted text-center">
-    New to Test Tcms? <a href="{% url 'signup' %}">Signup</a>
-</div>
-{% endblock %}
-
-{% block muted %}
-<div class="text-center py-2">
-    <small>
-        <a href="{% url 'home' %}" class="text-muted">Forgot your password?</a>
-    </small>
+    Already have an account? <a href="{% url 'login' %}">Login</a>
 </div>
 {% endblock %}
