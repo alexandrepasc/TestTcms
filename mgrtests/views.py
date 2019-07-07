@@ -1,39 +1,23 @@
-from django.shortcuts import redirect, render
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
 
-from common.utils import isLogin
 
-
+@login_required
 def home(request):
-    if isLogin(request):
+    setattr(request, 'view', 'home')
 
-        setattr(request, 'view', 'home')
-
-        return render(request, 'home.html')
-
-    else:
-
-        return redirect('/login/?next=/')
+    return render(request, 'home.html')
 
 
+@login_required
 def test_mgr(request):
-    if isLogin(request):
+    setattr(request, 'view', 'testMgr')
 
-        setattr(request, 'view', 'testMgr')
-
-        return render(request, 'testMgr.html')
-
-    else:
-
-        return redirect('/login/?next=/TestMgr/')
+    return render(request, 'testMgr.html')
 
 
+@login_required
 def test_run(request):
-    if isLogin(request):
+    setattr(request, 'view', 'testRun')
 
-        setattr(request, 'view', 'testRun')
-
-        return render(request, 'testRun.html')
-
-    else:
-
-        return redirect('/login/?next=/TestRun/')
+    return render(request, 'testRun.html')
