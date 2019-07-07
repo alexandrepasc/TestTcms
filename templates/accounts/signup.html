@@ -1,0 +1,20 @@
+{% extends 'accounts/baseAccounts.html' %}
+
+{% block cardTitle %}
+<h3 class="card-title">Sign up</h3>
+{% endblock %}
+
+{% block buttons %}
+<div style="float: left;">
+    <button type="submit" class="btn btn-success">Login</button>
+</div>
+<div style="float: right;">
+    <button type="submit" class="btn btn-danger" formaction="{% url 'home' %}">Cancel</button>
+</div>
+{% endblock %}
+
+{% block footer %}
+<div class="card-footer text-muted text-center">
+    Already have an account? <a href="{% url 'login' %}">Login</a>
+</div>
+{% endblock %}
