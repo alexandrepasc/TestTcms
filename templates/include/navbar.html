@@ -6,9 +6,9 @@
 
     {% if user.is_authenticated %}
     <div class="dropdownNav" style="float: right">
-        <button class="dropbtn">Settings&nbsp;&#8681;</button>
+        <button class="dropbtn">{{ user.username }}&nbsp;&#8681;</button>
         <div class="dropdownNav-content">
-            <a href="#">Link 1</a>
+            <a href="{% url 'logout' %}">Logout</a>
         </div>
     </div>
     {% else %}
