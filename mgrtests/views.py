@@ -1,19 +1,39 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+
+from common.utils import isLogin
 
 
 def home(request):
-    setattr(request, 'view', 'home')
+    if isLogin(request):
 
-    return render(request, 'home.html')
+        setattr(request, 'view', 'home')
+
+        return render(request, 'home.html')
+
+    else:
+
+        return redirect('/login/?next=/')
 
 
 def test_mgr(request):
-    setattr(request, 'view', 'testMgr')
+    if isLogin(request):
 
-    return render(request, 'testMgr.html')
+        setattr(request, 'view', 'testMgr')
+
+        return render(request, 'testMgr.html')
+
+    else:
+
+        return redirect('/login/?next=/TestMgr/')
 
 
 def test_run(request):
-    setattr(request, 'view', 'testRun')
+    if isLogin(request):
 
-    return render(request, 'testRun.html')
+        setattr(request, 'view', 'testRun')
+
+        return render(request, 'testRun.html')
+
+    else:
+
+        return redirect('/login/?next=/TestRun/')
