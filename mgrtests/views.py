@@ -1,3 +1,4 @@
+import uuid
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
@@ -37,6 +38,7 @@ def product(request):
 
         if form.is_valid():
             item = form.save(commit=False)
+            item.id = uuid.uuid4()
             item.created_by = request.user
             item.save()
 
