@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
+from .forms import NewProductForm
 from .models import Product
 
 
@@ -31,4 +32,15 @@ def product(request):
 
     setattr(request, 'view', 'product')
 
-    return render(request, 'product.html', {'items': items})
+    if request.method == 'POST':
+        form = NewProductForm(request.POST)
+
+        if form.is_valid():
+            item = form.save(commit=False)
+            item.created_by = request.user
+            item.save()
+
+    else:
+        form = NewProductForm()
+
+    return render(request, 'product.html', {'items': items, 'form': form})
