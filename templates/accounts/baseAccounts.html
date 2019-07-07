@@ -7,17 +7,25 @@ Test Tcms
 {% endblock %}
 
 {% block content %}
-<div class="card">
-    <div class="card-body">
-        <form method="post" novalidate>
-            {% csrf_token %}
-            % include 'include/form.html' %}
-            {% block buttons %}{% endblock %}
-        </form>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-4 col-md-6 col-sm-8">
+            <div class="card">
+                <div class="card-body">
+                    {% block cardTitle %}{% endblock %}
+
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        {% include 'include/form.html' %}
+                        {% block buttons %}{% endblock %}
+                    </form>
+                </div>
+
+                {% block footer %}{% endblock %}
+
+            </div>
+        </div>
     </div>
-
-    {% block footer %}{% endblock %}
-
 </div>
 
 {% block muted %}{% endblock %}
