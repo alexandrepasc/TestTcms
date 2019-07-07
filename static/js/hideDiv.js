@@ -1,5 +1,5 @@
-function hide() {
-  var x = document.getElementById("divHide");
+function hide(item) {
+  var x = document.getElementById(item);
   if (x.style.display === "none") {
     x.style.display = "block";
   } else {
