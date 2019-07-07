@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+Test Tcms
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <form method="post" novalidate>
+            {% csrf_token %}
+            % include 'include/form.html' %}
+            {% block buttons %}{% endblock %}
+        </form>
+    </div>
+
+    {% block footer %}{% endblock %}
+
+</div>
+
+{% block muted %}{% endblock %}
+
+{% endblock %}
