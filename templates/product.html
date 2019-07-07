@@ -10,19 +10,19 @@ Test Tcms
 <table class="table">
     <tr>
         <td colspan="2">
-            <button type="button" class="btn btn-primary" onclick="hide('divHide')">New</button>
+            <button type="button" class="btn btn-primary" onclick="newProd()">New</button>
         </td>
     </tr>
     <tr>
         <td width="40%">
             <ul class="list-group">
                 {% for item in items %}
-                <li class="list-group-item" id="{{ item.id }}">{{ item.name }}</li>
+                <li class="list-group-item" style="cursor: pointer;" id="{{ item.id }}" onclick="detail()">{{ item.name }}</li>
                 {% endfor %}
             </ul>
         </td>
         <td width="60%">
-            <div id="divHide" style="display: none;">
+            <div id="divNew" style="display: none;">
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-lg-8 col-md-6 col-sm-8">
@@ -47,6 +47,19 @@ Test Tcms
                     </div>
                 </div>
             </div>
+            <div id="divDetail" style="display: none;">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8 col-md-6 col-sm-8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="card-title">Detail</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </td>
     </tr>
 </table>
@@ -54,4 +67,36 @@ Test Tcms
 
 {% block script %}
 <script type="text/javascript" src="{% static 'js/hideDiv.js' %}"></script>
+<script type="text/javascript">
+function detail() {
+    var x = document.getElementById('divNew');
+    if (x.style.display === "none") {
+        /*x.style.display = "block";*/
+    } else {
+        x.style.display = "none";
+    }
+
+    var y = document.getElementById('divDetail');
+    if (y.style.display === "none") {
+        y.style.display = "block";
+    } else {
+        y.style.display = "none";
+    }
+}
+function newProd() {
+    var x = document.getElementById('divDetail');
+    if (x.style.display === "none") {
+        /*x.style.display = "block";*/
+    } else {
+        x.style.display = "none";
+    }
+
+    var y = document.getElementById('divNew');
+    if (y.style.display === "none") {
+        y.style.display = "block";
+    } else {
+        y.style.display = "none";
+    }
+}
+</script>
 {% endblock %}
