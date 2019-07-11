@@ -1,6 +1,6 @@
 import uuid
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from .forms import NewProductForm
 from .models import Product
@@ -33,6 +33,13 @@ def product(request):
 
     setattr(request, 'view', 'product')
 
+    return render(request, 'product/product.html', {'items': items})
+
+
+@login_required
+def new_product(request):
+    # items = Product.objects.all()
+
     if request.method == 'POST':
         form = NewProductForm(request.POST)
 
@@ -45,4 +52,11 @@ def product(request):
     else:
         form = NewProductForm()
 
-    return render(request, 'product.html', {'items': items, 'form': form})
+    return render(request, 'product/newProduct.html', {'form': form})
+
+
+@login_required
+def detail_product(request, id):
+    item = get_object_or_404(Product, id=id)
+
+    return render(request, 'product/detailProduct.html', {'item': item})

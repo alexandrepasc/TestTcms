@@ -4,4 +4,6 @@ from mgrtests import views
 urlpatterns = [
     url(r'^product$', views.product, name='product'),
     url(r'^product/$', views.product, name='product'),
+    url(r'^newProduct/$', views.new_product, name='newProduct'),
+    url(r'^detailProduct/(?P<id>[0-9a-f-]+)$', views.detail_product, name='detailProduct'),
 ]
