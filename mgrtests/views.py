@@ -49,10 +49,12 @@ def new_product(request):
             item.created_by = request.user
             item.save()
 
+            return render(request, 'product/newProductReload.html')
+
     else:
         form = NewProductForm()
 
-    return render(request, 'product/newProduct.html', {'form': form})
+        return render(request, 'product/newProduct.html', {'form': form})
 
 
 @login_required
