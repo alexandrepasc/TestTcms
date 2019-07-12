@@ -1,1 +1,15 @@
-{{ item.name }}
+{% extends 'product/baseFrame.html' %}
+
+{% block cardTitle %}
+Detail
+{% endblock %}
+
+{% block content %}
+<form method="post" novalidate>
+    {% csrf_token %}
+    {% include 'include/form.html' %}
+    <div style="float: left;">
+        <button type="submit" class="btn btn-success">Edit</button>
+    </div>
+</form>
+{% endblock %}

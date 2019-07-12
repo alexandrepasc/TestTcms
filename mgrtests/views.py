@@ -2,7 +2,7 @@ import uuid
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render
 
-from .forms import NewProductForm
+from .forms import DetailProductForm, NewProductForm
 from .models import Product
 
 
@@ -61,4 +61,6 @@ def new_product(request):
 def detail_product(request, id):
     item = get_object_or_404(Product, id=id)
 
-    return render(request, 'product/detailProduct.html', {'item': item})
+    form = DetailProductForm(initial={'name': item.name, 'description': item.description})
+
+    return render(request, 'product/detailProduct.html', {'item': item, 'form': form})
