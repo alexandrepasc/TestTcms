@@ -44,6 +44,10 @@ Test Tcms
     }
     function newProd() {
         document.getElementById('frame').src = '/newProduct/';
+
+        document.getElementById("listGroup").childNodes.forEach(function(element) {
+            element.className = 'list-group-item';
+        });
     }
 </script>
 {% endblock %}
