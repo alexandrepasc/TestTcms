@@ -2,7 +2,7 @@ import uuid
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render
 
-from .forms import DetailProductForm, NewProductForm
+from .forms import DetailProductForm, DetailEditProductForm, NewProductForm
 from .models import Product
 
 
@@ -64,3 +64,26 @@ def detail_product(request, id):
     form = DetailProductForm(initial={'name': item.name, 'description': item.description})
 
     return render(request, 'product/detailProduct.html', {'item': item, 'form': form})
+
+
+@login_required
+def detail_edit_product(request, id):
+    item = get_object_or_404(Product, id=id)
+    created = item.created_by
+    pk = item.id
+
+    if request.method == 'POST':
+        form = DetailEditProductForm(request.POST)
+
+        if form.is_valid():
+            item = form.save(commit=False)
+            item.created_by = created
+            item.id = pk
+            item.save()
+
+            return detail_product(request, id)
+
+    else:
+        form = DetailEditProductForm(initial={'id': item.id, 'name': item.name, 'description': item.description})
+
+        return render(request, 'product/detailEditProduct.html', {'item': item, 'form': form})
