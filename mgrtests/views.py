@@ -29,7 +29,7 @@ def test_run(request):
 
 @login_required
 def product(request):
-    items = Product.objects.all()
+    items = Product.objects.all().order_by('name')
 
     setattr(request, 'view', 'product')
 
