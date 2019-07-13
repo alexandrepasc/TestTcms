@@ -1,0 +1,53 @@
+{% extends 'baseTemplate.html' %}
+
+{% load static %}
+
+{% block title %}
+Test Tcms
+{% endblock %}
+
+{% block content %}
+<table class="table">
+    <tr>
+        <td colspan="2">
+            <button type="button" class="btn btn-primary" onclick="newProd()">New</button>
+        </td>
+    </tr>
+    <tr>
+        <td width="40%">
+            <ul class="list-group" id="listGroup">
+                {% for item in items %}
+                <li class="list-group-item" style="cursor: pointer;" id="{{ item.id }}" onclick="detail('{{ item.id }}')">{{ item.name }}</li>
+                {% endfor %}
+            </ul>
+        </td>
+        <td width="60%">
+            <div class="container">
+                <iframe id="frame" width="100%" height="400px" style="border: none;"></iframe>
+            </div>
+        </td>
+    </tr>
+</table>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="{% static 'js/hideDiv.js' %}"></script>
+<script type="text/javascript">
+    function detail(id) {
+        document.getElementById('frame').src = '/detailProduct/' + id;
+
+        document.getElementById("listGroup").childNodes.forEach(function(element) {
+            element.className = 'list-group-item';
+        });
+
+        document.getElementById(id).className = 'list-group-item active';
+    }
+    function newProd() {
+        document.getElementById('frame').src = '/newProduct/';
+
+        document.getElementById("listGroup").childNodes.forEach(function(element) {
+            element.className = 'list-group-item';
+        });
+    }
+</script>
+{% endblock %}
