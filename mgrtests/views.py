@@ -1,6 +1,6 @@
 import uuid
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import DetailProductForm, DetailEditProductForm, NewProductForm
 from .models import Product
@@ -81,7 +81,7 @@ def detail_edit_product(request, id):
             item.id = pk
             item.save()
 
-            return detail_product(request, id)
+            return redirect('/detailProduct/' + str(item.id) + '/?page=reload')
 
     else:
         form = DetailEditProductForm(initial={'id': item.id, 'name': item.name, 'description': item.description})
