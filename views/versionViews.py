@@ -7,4 +7,8 @@ from mgrtests.models import Version
 
 @login_required
 def version(request):
-    return render(request, 'version/version.html')
+    items = Version.objects.all().order_by('name')
+
+    setattr(request, 'view', 'product')
+
+    return render(request, 'version/version.html', {'items': items})
