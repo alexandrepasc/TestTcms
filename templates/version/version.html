@@ -1,1 +1,37 @@
-versao
+{% extends 'baseTemplate.html' %}
+
+{% load static %}
+
+{% block title %}
+Test Tcms
+{% endblock %}
+
+{% block content %}
+<table class="table">
+    <tr>
+        <td colspan="2">
+            <button type="button" class="btn btn-primary" onclick="newItem('newVersion')">New</button>
+        </td>
+    </tr>
+    <tr>
+        <td width="40%">
+            <ul class="list-group" id="listGroup">
+                {% for item in items %}
+                <li class="list-group-item" style="cursor: pointer;" id="{{ item.id }}"
+                    onclick="detailItem('detailVersion', '{{ item.id }}')">{{ item.name }}</li>
+                {% endfor %}
+            </ul>
+        </td>
+        <td width="60%">
+            <div class="container">
+                <iframe id="frame" width="100%" height="400px" style="border: none;"></iframe>
+            </div>
+        </td>
+    </tr>
+</table>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="{% static 'js/itemDetail.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/itemNew.js' %}"></script>
+{% endblock %}
