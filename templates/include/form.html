@@ -1,5 +1,9 @@
 {% load formTags widget_tweaks %}
 
+{% for hidden in form.hidden_fields %}
+{% render_field hidden class=hidden|input_class %}
+{% endfor %}
+
 {% if form.non_field_errors %}
 <div class="alert alert-danger" role="alert">
     {% for error in form.non_field_errors %}
@@ -8,7 +12,7 @@
 </div>
 {% endif %}
 
-{% for field in form %}
+{% for field in form.visible_fields %}
 <div class="form-group">
     {{ field.label_tag }}
     {% render_field field class=field|input_class %}

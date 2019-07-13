@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class Product(models.Model):
     id = models.UUIDField(primary_key=True, unique=True, default=uuid.uuid4())
-    name = models.CharField(max_length=30, unique=True)
+    name = models.CharField(max_length=30)
     description = models.CharField(max_length=100)
     created_by = models.ForeignKey(User, related_name='products', on_delete=models.CASCADE)
 
