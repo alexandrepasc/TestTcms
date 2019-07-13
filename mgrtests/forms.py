@@ -56,7 +56,8 @@ class NewVersionForm(forms.ModelForm):
     name = forms.CharField(
         widget=forms.Textarea(attrs={'rows': 1, 'placeholder': 'Product version'}),
         max_length=30,
-        help_text='ex. 1.1, 1.5b'
+        help_text='ex. 1.1, 1.5b',
+        label='Version:'
     )
 
     description = forms.CharField(
@@ -65,6 +66,13 @@ class NewVersionForm(forms.ModelForm):
         help_text='The max length of the text is 100.',
     )
 
+    product = forms.CharField(label='Product:',
+                              widget=forms.Select(choices=Product.objects.values_list('id', 'name').order_by('name')))
+
     class Meta:
         model = Version
-        fields = ['name', 'description']
+        fields = ['name', 'description', 'product']
+
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['product'].queryset = Product.objects.values_list('id', 'name').order_by('name')
