@@ -1,11 +1,12 @@
 from django.conf.urls import url
-from mgrtests import views
+from views import productViews
 
 urlpatterns = [
-    url(r'^product$', views.product, name='product'),
-    url(r'^product/$', views.product, name='product'),
-    url(r'^newProduct/$', views.new_product, name='newProduct'),
-    url(r'^detailProduct/(?P<id>[0-9a-f-]+)$', views.detail_product, name='detailProduct'),
-    url(r'^detailProduct/(?P<id>[0-9a-f-]+)/?(\S)$', views.detail_product, name='detailProduct'),
-    url(r'^detailEditProduct/(?P<id>[0-9a-f-]+)$', views.detail_edit_product, name='detailEditProduct'),
+    url(r'^product$', productViews.product, name='product'),
+    url(r'^product/$', productViews.product, name='product'),
+    url(r'^newProduct/$', productViews.new_product, name='newProduct'),
+    url(r'^newProduct/?(\S)$', productViews.new_product, name='newProduct'),
+    url(r'^detailProduct/(?P<pk>[0-9a-f-]+)$', productViews.detail_product, name='detailProduct'),
+    url(r'^detailProduct/(?P<pk>[0-9a-f-]+)/?(\S)$', productViews.detail_product, name='detailProduct'),
+    url(r'^editProduct/(?P<pk>[0-9a-f-]+)$', productViews.edit_product, name='editProduct'),
 ]
