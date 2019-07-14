@@ -35,9 +35,11 @@ def new_version(request):
 
 
 @login_required
-def detail_version(request, id):
-    item = get_object_or_404(Version, id=id)
+def detail_version(request, pk):
+    item = get_object_or_404(Version, id=pk)
 
     form = DetailVersionForm(initial={'name': item.name, 'description': item.description, 'product': item.product})
+
+    form.fields['product'].widget.attrs['disabled'] = True
 
     return render(request, 'include/detailItem.html', {'item': item, 'form': form})
