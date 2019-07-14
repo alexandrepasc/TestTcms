@@ -1,8 +1,8 @@
 import uuid
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 
-from mgrtests.forms import NewVersionForm
+from mgrtests.forms import DetailVersionForm, NewVersionForm
 from mgrtests.models import Version
 
 
@@ -21,7 +21,6 @@ def new_version(request):
         form = NewVersionForm(request.POST)
 
         if form.is_valid():
-
             item = form.save(commit=False)
             item.id = uuid.uuid4()
             item.created_by = request.user
@@ -33,3 +32,12 @@ def new_version(request):
         form = NewVersionForm()
 
     return render(request, 'include/newItem.html', {'form': form})
+
+
+@login_required
+def detail_version(request, id):
+    item = get_object_or_404(Version, id=id)
+
+    form = DetailVersionForm(initial={'name': item.name, 'description': item.description, 'product': item.product})
+
+    return render(request, 'include/detailItem.html', {'item': item, 'form': form})

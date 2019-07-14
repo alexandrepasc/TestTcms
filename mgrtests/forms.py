@@ -69,3 +69,18 @@ class NewVersionForm(forms.ModelForm):
     class Meta:
         model = Version
         fields = ['name', 'description', 'product']
+
+
+class DetailVersionForm(forms.ModelForm):
+    name = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 1, 'placeholder': 'Product name', 'readonly': True}),
+        max_length=30
+    )
+    description = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 5, 'placeholder': 'Product description', 'readonly': True}),
+        max_length=100,
+    )
+
+    class Meta:
+        model = Version
+        fields = ['name', 'description', 'product']
