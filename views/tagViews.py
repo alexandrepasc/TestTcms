@@ -2,7 +2,7 @@ import uuid
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
-from forms.tagForms import NewForm
+from forms.tagForms import DetailForm, NewForm
 from mgrtests.models import Tag
 
 
@@ -33,3 +33,14 @@ def new_tag(request):
         form = NewForm()
 
     return render(request, 'include/newItem.html', {'form': form})
+
+
+@login_required
+def detail_tag(request, pk):
+    item = get_object_or_404(Tag, id=pk)
+
+    form = DetailForm(initial={'name': item.name, 'description': item.description})
+
+    setattr(request, 'context', 'Tag')
+
+    return render(request, 'include/detailItem.html', {'item': item, 'form': form})

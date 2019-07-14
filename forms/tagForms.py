@@ -18,3 +18,18 @@ class NewForm(forms.ModelForm):
     class Meta:
         model = Tag
         fields = ['name', 'description']
+
+
+class DetailForm(forms.ModelForm):
+    name = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 1, 'placeholder': 'Tag name', 'readonly': True}),
+        max_length=30
+    )
+    description = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 5, 'placeholder': 'Tag description', 'readonly': True}),
+        max_length=100,
+    )
+
+    class Meta:
+        model = Tag
+        fields = ['name', 'description']
