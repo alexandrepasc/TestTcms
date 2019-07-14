@@ -1,5 +1,11 @@
 {% extends 'product/baseFrame.html' %}
 
+{% load static %}
+
+{% block bodyParam %}
+onload="onLoad()"
+{% endblock %}
+
 {% block cardTitle %}
 New
 {% endblock %}
@@ -18,6 +24,7 @@ New
 {% endblock %}
 
 {% block script %}
+<script type="text/javascript" src="{% static 'js/itemOnLoad.js' %}"></script>
 <script type="text/javascript">
     function reload() {
         parent.location.reload();
