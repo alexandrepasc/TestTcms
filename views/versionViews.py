@@ -10,7 +10,7 @@ from mgrtests.models import Version
 def version(request):
     items = Version.objects.all().order_by('name')
 
-    setattr(request, 'view', 'product')
+    setattr(request, 'view', 'version')
 
     return render(request, 'product/version.html', {'items': items})
 
