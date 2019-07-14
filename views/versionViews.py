@@ -12,7 +12,7 @@ def version(request):
 
     setattr(request, 'view', 'product')
 
-    return render(request, 'version/version.html', {'items': items})
+    return render(request, 'product/version.html', {'items': items})
 
 
 @login_required
