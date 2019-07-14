@@ -1,5 +1,7 @@
 {% extends 'product/baseFrame.html' %}
 
+{% load static %}
+
 {% block cardTitle %}
 Detail
 {% endblock %}
@@ -19,9 +21,10 @@ onload="onLoad()"
 {% endblock %}
 
 {% block script %}
+<script type="text/javascript" src="{% static 'js/itemOnLoad.js' %}"></script>
 <script type="text/javascript">
     function reload() {
-        window.location.href = '/detailEditItem/{{ item.id }}';
+        window.location.href = '/edit{{ request.context }}/{{ item.id }}';
     }
 </script>
 {% endblock %}
