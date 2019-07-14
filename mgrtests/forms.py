@@ -34,7 +34,7 @@ class DetailProductForm(forms.ModelForm):
         fields = ['name', 'description']
 
 
-class DetailEditProductForm(forms.ModelForm):
+class EditProductForm(forms.ModelForm):
     id = forms.CharField(widget=forms.HiddenInput())
 
     name = forms.CharField(
