@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{% static 'css/topnav.css' %}">
     {% block stylesheet %}{% endblock %}
 </head>
-<body>
+<body {% block bodyParam %}{% endblock %}>
 {% block body %}
 <div class="container-fluid">
     {% include 'include/navbar.html' %}

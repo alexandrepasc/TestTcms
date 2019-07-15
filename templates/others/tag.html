@@ -2,6 +2,10 @@
 
 {% load static %}
 
+{% block bodyParam %}
+onload="clickItem()"
+{% endblock %}
+
 {% block title %}
 Test Tcms
 {% endblock %}
@@ -35,4 +39,5 @@ Test Tcms
 {% block script %}
 <script type="text/javascript" src="{% static 'js/itemDetail.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/itemNew.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/listSelectItem.js' %}"></script>
 {% endblock %}
