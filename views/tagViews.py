@@ -19,6 +19,8 @@ def tag(request):
 
 @login_required
 def new_tag(request):
+    setattr(request, 'view', 'tag')
+
     if request.method == 'POST':
         form = NewForm(request.POST)
 
@@ -28,7 +30,7 @@ def new_tag(request):
             item.created_by = request.user
             item.save()
 
-            return redirect('/newTag/?page=reload')
+            return redirect('/newTag/?id=' + str(item.id))
 
     else:
         form = NewForm()

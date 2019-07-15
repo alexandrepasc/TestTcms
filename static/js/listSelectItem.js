@@ -1,7 +1,8 @@
 function clickItem(view) {
     var url = new URL(window.location.href);
-    if (url.searchParams.get("id") !== undefined || url.searchParams.get("id") !== null) {
-        var c = url.searchParams.get("id");
+    var c = url.searchParams.get("id");
+    if (c != undefined || c != null) {
+
         console.log(c);
         document.getElementById(c).click();
         ChangeUrl("", "/" + view + "/")

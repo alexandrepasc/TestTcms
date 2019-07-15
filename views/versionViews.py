@@ -17,6 +17,8 @@ def version(request):
 
 @login_required
 def new_version(request):
+    setattr(request, 'view', 'version')
+
     if request.method == 'POST':
         form = NewVersionForm(request.POST)
 
@@ -26,7 +28,7 @@ def new_version(request):
             item.created_by = request.user
             item.save()
 
-            return redirect('/newVersion/?page=reload')
+            return redirect('/newVersion/?id=' + str(item.id))
 
     else:
         form = NewVersionForm()

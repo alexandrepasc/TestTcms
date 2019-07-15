@@ -8,8 +8,9 @@
 //}
 function onLoad(view) {
     var url = new URL(window.location.href);
-    if (typeof url.searchParams.get("id") !== 'undefined') {
-         var c = url.searchParams.get("id");
+    var c = url.searchParams.get("id");
+    if (c != undefined || c != null) {
+
         console.log(c);
         parent.location.href = "/" + view + "/?id=" + c;
     }
