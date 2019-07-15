@@ -56,3 +56,12 @@ class Tag(models.Model):
     created_by = models.ForeignKey(User, related_name='tags', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(null=True)
+
+
+class Component(models.Model):
+    id = models.UUIDField(primary_key=True, unique=True, default=uuid.uuid4())
+    name = models.CharField(max_length=30)
+    description = models.CharField(max_length=100)
+    created_by = models.ForeignKey(User, related_name='components', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(null=True)
