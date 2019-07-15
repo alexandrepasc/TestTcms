@@ -69,7 +69,7 @@ def edit_tag(request, pk):
             item.id = identification
             item.save()
 
-            return redirect('/detailTag/' + str(item.id) + '/?page=reload')
+            return redirect('/detailTag/' + str(item.id) + '/?id=' + str(item.id))
 
     else:
         form = EditForm(initial={'name': item.name, 'description': item.description})
