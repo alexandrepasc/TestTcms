@@ -20,7 +20,7 @@ Edit
 {% block script %}
 <script type="text/javascript">
     function reload() {
-        parent.location.href = "/{{ request.parent }}/?id={{ item.id }}";
+        parent.location.href = "/{{ request.view }}/?id={{ item.id }}";
     }
 </script>
 {% endblock %}

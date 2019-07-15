@@ -50,8 +50,11 @@ def detail_product(request, pk):
 @login_required
 def edit_product(request, pk):
     item = get_object_or_404(Product, id=pk)
+
     created = item.created_by
-    pk = item.id
+    identification = item.id
+
+    setattr(request, 'view', 'product')
 
     if request.method == 'POST':
         form = EditProductForm(request.POST)
@@ -59,7 +62,7 @@ def edit_product(request, pk):
         if form.is_valid():
             item = form.save(commit=False)
             item.created_by = created
-            item.id = pk
+            item.id = identification
             item.save()
 
             return redirect('/detailProduct/' + str(item.id) + '/?page=reload')

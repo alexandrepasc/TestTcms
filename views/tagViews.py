@@ -43,6 +43,7 @@ def detail_tag(request, pk):
     form = DetailForm(initial={'name': item.name, 'description': item.description})
 
     setattr(request, 'context', 'Tag')
+    setattr(request, 'view', 'tag')
 
     return render(request, 'include/detailItem.html', {'item': item, 'form': form})
 
@@ -55,7 +56,7 @@ def edit_tag(request, pk):
     created_at = item.created_at
     identification = item.id
 
-    setattr(request, 'parent', 'tag')
+    setattr(request, 'view', 'tag')
 
     if request.method == 'POST':
         form = EditForm(request.POST)

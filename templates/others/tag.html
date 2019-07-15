@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block bodyParam %}
-onload="clickItem()"
+onload="clickItem('{{ request.view }}')"
 {% endblock %}
 
 {% block title %}

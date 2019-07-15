@@ -52,7 +52,9 @@ def edit_version(request, pk):
     item = get_object_or_404(Version, id=pk)
 
     created = item.created_by
-    ident = item.id
+    identification = item.id
+
+    setattr(request, 'view', 'version')
 
     if request.method == 'POST':
         form = EditVersionForm(request.POST)
@@ -60,7 +62,7 @@ def edit_version(request, pk):
         if form.is_valid():
             item = form.save(commit=False)
             item.created_by = created
-            item.id = ident
+            item.id = identification
             item.save()
 
             return redirect('/detailVersion/' + str(item.id) + '/?page=reload')
