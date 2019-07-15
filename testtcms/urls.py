@@ -29,5 +29,6 @@ urlpatterns = [
     path('', include('urls.signupUrl')),
     path('', include('urls.productUrl')),
     path('', include('urls.versionUrl')),
+    path('', include('urls.componentUrl')),
     path('', include('urls.tagUrl')),
 ]
