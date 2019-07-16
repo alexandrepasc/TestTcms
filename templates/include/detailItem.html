@@ -1,13 +1,13 @@
-{% extends 'product/baseFrame.html' %}
+{% extends 'include/baseFrame.html' %}
 
 {% load static %}
 
-{% block cardTitle %}
-Detail
-{% endblock %}
-
 {% block bodyParam %}
 onload="onLoad('{{ request.view }}')"
+{% endblock %}
+
+{% block cardTitle %}
+Detail
 {% endblock %}
 
 {% block content %}
