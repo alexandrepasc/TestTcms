@@ -2,7 +2,7 @@ import uuid
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
-from mgrtests.forms import DetailProductForm, EditProductForm, NewProductForm
+from forms.productForms import DetailForm, EditForm, NewForm
 from mgrtests.models import Product
 
 
@@ -11,6 +11,7 @@ def product(request):
     items = Product.objects.all().order_by('name')
 
     setattr(request, 'view', 'product')
+    setattr(request, 'title', 'Products')
 
     return render(request, 'product/product.html', {'items': items})
 
@@ -20,7 +21,7 @@ def new_product(request):
     setattr(request, 'view', 'product')
 
     if request.method == 'POST':
-        form = NewProductForm(request.POST)
+        form = NewForm(request.POST)
 
         if form.is_valid():
             item = form.save(commit=False)
@@ -31,18 +32,19 @@ def new_product(request):
             return redirect('/newProduct/?id=' + str(item.id))
 
     else:
-        form = NewProductForm()
+        form = NewForm()
 
-        return render(request, 'include/newItem.html', {'form': form})
+    return render(request, 'include/newItem.html', {'form': form})
 
 
 @login_required
 def detail_product(request, pk):
     item = get_object_or_404(Product, id=pk)
 
-    form = DetailProductForm(initial={'name': item.name, 'description': item.description})
-
     setattr(request, 'context', 'Product')
+    setattr(request, 'view', 'product')
+
+    form = DetailForm(initial={'name': item.name, 'description': item.description})
 
     return render(request, 'include/detailItem.html', {'item': item, 'form': form})
 
@@ -51,23 +53,23 @@ def detail_product(request, pk):
 def edit_product(request, pk):
     item = get_object_or_404(Product, id=pk)
 
-    created = item.created_by
     identification = item.id
+    created_by = item.created_by
 
     setattr(request, 'view', 'product')
 
     if request.method == 'POST':
-        form = EditProductForm(request.POST)
+        form = EditForm(request.POST)
 
         if form.is_valid():
             item = form.save(commit=False)
-            item.created_by = created
+            item.created_by = created_by
             item.id = identification
             item.save()
 
-            return redirect('/detailProduct/' + str(item.id) + '/?page=reload')
+            return redirect('/detailProduct/' + str(item.id) + '/?id=' + str(item.id))
 
     else:
-        form = EditProductForm(initial={'id': item.id, 'name': item.name, 'description': item.description})
+        form = EditForm(initial={'id': item.id, 'name': item.name, 'description': item.description})
 
-        return render(request, 'include/editItem.html', {'item': item, 'form': form})
+        return render(request, 'include/editItem.html', {'form': form, 'item': item})
