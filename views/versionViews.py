@@ -2,7 +2,7 @@ import uuid
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
-from mgrtests.forms import DetailVersionForm, EditVersionForm, NewVersionForm
+from forms.versionForms import DetailForm, EditForm, NewForm
 from mgrtests.models import Version
 
 
@@ -20,7 +20,7 @@ def new_version(request):
     setattr(request, 'view', 'version')
 
     if request.method == 'POST':
-        form = NewVersionForm(request.POST)
+        form = NewForm(request.POST)
 
         if form.is_valid():
             item = form.save(commit=False)
@@ -31,7 +31,7 @@ def new_version(request):
             return redirect('/newVersion/?id=' + str(item.id))
 
     else:
-        form = NewVersionForm()
+        form = NewForm()
 
     return render(request, 'include/newItem.html', {'form': form})
 
@@ -40,11 +40,12 @@ def new_version(request):
 def detail_version(request, pk):
     item = get_object_or_404(Version, id=pk)
 
-    form = DetailVersionForm(initial={'name': item.name, 'description': item.description, 'product': item.product})
+    setattr(request, 'context', 'Version')
+    setattr(request, 'view', 'version')
+
+    form = DetailForm(initial={'name': item.name, 'description': item.description, 'product': item.product})
 
     form.fields['product'].widget.attrs['disabled'] = True
-
-    setattr(request, 'context', 'Version')
 
     return render(request, 'include/detailItem.html', {'item': item, 'form': form})
 
@@ -53,23 +54,23 @@ def detail_version(request, pk):
 def edit_version(request, pk):
     item = get_object_or_404(Version, id=pk)
 
-    created = item.created_by
-    identification = item.id
-
     setattr(request, 'view', 'version')
 
+    created_by = item.created_by
+    identification = item.id
+
     if request.method == 'POST':
-        form = EditVersionForm(request.POST)
+        form = EditForm(request.POST)
 
         if form.is_valid():
             item = form.save(commit=False)
-            item.created_by = created
             item.id = identification
+            item.created_by = created_by
             item.save()
 
-            return redirect('/detailVersion/' + str(item.id) + '/?page=reload')
+            return redirect('/detailVersion/' + str(item.id) + '/?id=' + str(item.id))
 
     else:
-        form = EditVersionForm(initial={'name': item.name, 'description': item.description, 'product': item.product})
+        form = EditForm(initial={'name': item.name, 'description': item.description, 'product': item.product})
 
-        return render(request, 'include/editItem.html', {'form': form})
+        return render(request, 'include/editItem.html', {'form': form, 'item': item})
