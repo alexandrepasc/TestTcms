@@ -10,13 +10,15 @@ from mgrtests.models import Version
 def version(request):
     items = Version.objects.all().order_by('name')
 
-    setattr(request, 'view', 'product')
+    setattr(request, 'view', 'version')
 
     return render(request, 'product/version.html', {'items': items})
 
 
 @login_required
 def new_version(request):
+    setattr(request, 'view', 'version')
+
     if request.method == 'POST':
         form = NewVersionForm(request.POST)
 
@@ -26,7 +28,7 @@ def new_version(request):
             item.created_by = request.user
             item.save()
 
-            return redirect('/newVersion/?page=reload')
+            return redirect('/newVersion/?id=' + str(item.id))
 
     else:
         form = NewVersionForm()
@@ -52,7 +54,9 @@ def edit_version(request, pk):
     item = get_object_or_404(Version, id=pk)
 
     created = item.created_by
-    ident = item.id
+    identification = item.id
+
+    setattr(request, 'view', 'version')
 
     if request.method == 'POST':
         form = EditVersionForm(request.POST)
@@ -60,7 +64,7 @@ def edit_version(request, pk):
         if form.is_valid():
             item = form.save(commit=False)
             item.created_by = created
-            item.id = ident
+            item.id = identification
             item.save()
 
             return redirect('/detailVersion/' + str(item.id) + '/?page=reload')

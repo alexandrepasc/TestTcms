@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block bodyParam %}
-onload="onLoad()"
+onload="onLoad('{{ request.view }}')"
 {% endblock %}
 
 {% block cardTitle %}
