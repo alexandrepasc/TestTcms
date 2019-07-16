@@ -72,4 +72,4 @@ def edit_product(request, pk):
     else:
         form = EditForm(initial={'id': item.id, 'name': item.name, 'description': item.description})
 
-        return render(request, 'include/editItem.html', {'item': item, 'form': form})
+        return render(request, 'include/editItem.html', {'form': form, 'item': item})
