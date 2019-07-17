@@ -18,6 +18,9 @@ Detail
 <div style="float: left;">
     <button class="btn btn-success" onclick="reload()">Edit</button>
 </div>
+<div style="float: right;">
+    <button class="btn btn-danger" onclick="deleting()">Delete</button>
+</div>
 {% endblock %}
 
 {% block script %}
@@ -25,6 +28,13 @@ Detail
 <script type="text/javascript">
     function reload() {
         window.location.href = '/edit{{ request.context }}/{{ item.id }}';
+    }
+
+    function deleting() {
+        var r = confirm("Do you really want to delete \"{{ item.name }}\" {{ request.view }}?");
+        if (r == true) {
+            parent.location.href = '/delete{{ request.context }}/{{ item.id }}';
+        }
     }
 </script>
 {% endblock %}
