@@ -73,3 +73,12 @@ def edit_product(request, pk):
         form = EditForm(initial={'id': item.id, 'name': item.name, 'description': item.description})
 
         return render(request, 'include/editItem.html', {'form': form, 'item': item})
+
+
+@login_required
+def delete_product(request, pk):
+    item = get_object_or_404(Product, id=pk)
+
+    Product.objects.filter(id=item.id).delete()
+
+    return redirect('/product/')

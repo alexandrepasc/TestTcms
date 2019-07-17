@@ -31,7 +31,7 @@ Detail
     }
 
     function deleting() {
-        var r = confirm("Do you really want to DELETE {{ item.name }} {{ request.view }}?");
+        var r = confirm("Do you really want to delete \"{{ item.name }}\" {{ request.view }}?");
         if (r == true) {
             parent.location.href = '/delete{{ request.context }}/{{ item.id }}';
         }

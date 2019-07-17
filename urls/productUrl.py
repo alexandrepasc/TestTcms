@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^detailProduct/(?P<pk>[0-9a-f-]+)$', productViews.detail_product, name='detailProduct'),
     url(r'^detailProduct/(?P<pk>[0-9a-f-]+)/?(\S)$', productViews.detail_product, name='detailProduct'),
     url(r'^editProduct/(?P<pk>[0-9a-f-]+)$', productViews.edit_product, name='editProduct'),
+    url(r'^deleteProduct/(?P<pk>[0-9a-f-]+)$', productViews.delete_product, name='deleteProduct'),
 ]
