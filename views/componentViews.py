@@ -77,3 +77,12 @@ def edit_component(request, pk):
         form = EditForm(initial={'name': item.name, 'description': item.description})
 
         return render(request, 'include/editItem.html', {'form': form, 'item': item})
+
+
+@login_required
+def delete_component(request, pk):
+    item = get_object_or_404(Component, id=pk)
+
+    Component.objects.filter(id=item.id).delete()
+
+    return redirect('/component/')

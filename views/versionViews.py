@@ -74,3 +74,12 @@ def edit_version(request, pk):
         form = EditForm(initial={'name': item.name, 'description': item.description, 'product': item.product})
 
         return render(request, 'include/editItem.html', {'form': form, 'item': item})
+
+
+@login_required
+def delete_version(request, pk):
+    item = get_object_or_404(Version, id=pk)
+
+    Version.objects.filter(id=item.id).delete()
+
+    return redirect('/version/')

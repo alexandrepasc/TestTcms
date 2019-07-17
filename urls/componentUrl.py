@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^detailComponent/(?P<pk>[0-9a-f-]+)$', componentViews.detail_component, name='detailComponent'),
     url(r'^detailComponent/(?P<pk>[0-9a-f-]+)/?(\S)$', componentViews.detail_component, name='detailComponent'),
     url(r'^editComponent/(?P<pk>[0-9a-f-]+)$', componentViews.edit_component, name='editComponent'),
+    url(r'^deleteComponent/(?P<pk>[0-9a-f-]+)$', componentViews.delete_component, name='deleteComponent'),
 ]
