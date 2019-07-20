@@ -1,4 +1,6 @@
+import pytz
 import uuid
+from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -11,6 +13,7 @@ def version(request):
     items = Version.objects.all().order_by('name')
 
     setattr(request, 'view', 'version')
+    setattr(request, 'title', 'Versions')
 
     return render(request, 'product/version.html', {'items': items})
 
@@ -26,6 +29,7 @@ def new_version(request):
             item = form.save(commit=False)
             item.id = uuid.uuid4()
             item.created_by = request.user
+            item.created_at = int(datetime.now(tz=pytz.utc).timestamp() * 1000)
             item.save()
 
             return redirect('/newVersion/?id=' + str(item.id))
@@ -64,11 +68,22 @@ def edit_version(request, pk):
 
         if form.is_valid():
             item = form.save(commit=False)
-            item.id = identification
-            item.created_by = created_by
-            item.save()
+            # item.id = identification
+            # item.created_by = created_by
+            # item.created_at = created_at
+            # item.updated_by = request.user
+            # item.updated_at = datetime.now()
+            # item.save()
 
-            return redirect('/detailVersion/' + str(item.id) + '/?id=' + str(item.id))
+            Version.objects.filter(id=identification).update(
+                name=item.name,
+                description=item.description,
+                product=item.product,
+                updated_by=request.user,
+                updated_at=int(datetime.now(tz=pytz.utc).timestamp() * 1000)
+            )
+
+            return redirect('/detailVersion/' + str(identification) + '/?id=' + str(identification))
 
     else:
         form = EditForm(initial={'name': item.name, 'description': item.description, 'product': item.product})

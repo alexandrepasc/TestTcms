@@ -1,4 +1,6 @@
+import pytz
 import uuid
+from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -27,6 +29,7 @@ def new_product(request):
             item = form.save(commit=False)
             item.id = uuid.uuid4()
             item.created_by = request.user
+            item.created_at = int(datetime.now(tz=pytz.utc).timestamp() * 1000)
             item.save()
 
             return redirect('/newProduct/?id=' + str(item.id))
@@ -54,7 +57,6 @@ def edit_product(request, pk):
     item = get_object_or_404(Product, id=pk)
 
     identification = item.id
-    created_by = item.created_by
 
     setattr(request, 'view', 'product')
 
@@ -63,11 +65,18 @@ def edit_product(request, pk):
 
         if form.is_valid():
             item = form.save(commit=False)
-            item.created_by = created_by
-            item.id = identification
-            item.save()
+            # item.created_by = created_by
+            # item.id = identification
+            # item.save()
 
-            return redirect('/detailProduct/' + str(item.id) + '/?id=' + str(item.id))
+            Product.objects.filter(id=identification).update(
+                name=item.name,
+                description=item.description,
+                updated_by=request.user,
+                updated_at=int(datetime.now(tz=pytz.utc).timestamp() * 1000)
+            )
+
+            return redirect('/detailProduct/' + str(identification) + '/?id=' + str(identification))
 
     else:
         form = EditForm(initial={'id': item.id, 'name': item.name, 'description': item.description})

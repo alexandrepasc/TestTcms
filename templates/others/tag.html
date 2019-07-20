@@ -20,12 +20,19 @@ Test Tcms
     </tr>
     <tr>
         <td width="40%">
+            {% if items.count > 0 %}
             <ul class="list-group" id="listGroup">
                 {% for item in items %}
                 <li class="list-group-item" style="cursor: pointer;" id="{{ item.id }}"
-                    onclick="detailItem('detailTag', '{{ item.id }}')">{{ item.name }}</li>
+                    onclick="detailItem('detailTag', '{{ item.id }}')">{{ item.name }}
+                </li>
                 {% endfor %}
             </ul>
+            {% else %}
+            <div class="card-footer text-muted text-center">
+                (no {{ request.view }})
+            </div>
+            {% endif %}
         </td>
         <td width="60%">
             <div class="container">
