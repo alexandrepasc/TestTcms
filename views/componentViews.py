@@ -1,3 +1,4 @@
+import pytz
 import uuid
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
@@ -28,6 +29,7 @@ def new_component(request):
             item = form.save(commit=False)
             item.id = uuid.uuid4()
             item.created_by = request.user
+            item.created_at = int(datetime.now(tz=pytz.utc).timestamp() * 1000)
             item.save()
 
             return redirect('/newComponent/?id=' + str(item.id))
@@ -54,24 +56,30 @@ def detail_component(request, pk):
 def edit_component(request, pk):
     item = get_object_or_404(Component, id=pk)
 
-    setattr(request, 'view', 'component')
-
-    created_by = item.created_by
-    created_at = item.created_at
     identification = item.id
+
+    setattr(request, 'view', 'component')
 
     if request.method == 'POST':
         form = EditForm(request.POST)
 
         if form.is_valid():
             item = form.save(commit=False)
-            item.id = identification
-            item.created_by = created_by
-            item.created_at = created_at
-            item.updated_at = datetime.now()
-            item.save()
+            # item.id = identification
+            # item.created_by = created_by
+            # item.created_at = created_at
+            # item.update_by = request.user
+            # item.updated_at = datetime.now()
+            # item.save()
 
-            return redirect('/detailComponent/' + str(item.id) + '/?id=' + str(item.id))
+            Component.objects.filter(id=identification).update(
+                name=item.name,
+                description=item.description,
+                updated_by=request.user,
+                updated_at=int(datetime.now(tz=pytz.utc).timestamp() * 1000)
+            )
+
+            return redirect('/detailComponent/' + str(identification) + '/?id=' + str(identification))
 
     else:
         form = EditForm(initial={'name': item.name, 'description': item.description})
