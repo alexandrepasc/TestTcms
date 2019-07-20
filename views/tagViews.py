@@ -1,3 +1,4 @@
+import pytz
 import uuid
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
@@ -28,6 +29,7 @@ def new_tag(request):
             item = form.save(commit=False)
             item.id = uuid.uuid4()
             item.created_by = request.user
+            item.created_at = int(datetime.now(tz=pytz.utc).timestamp() * 1000)
             item.save()
 
             return redirect('/newTag/?id=' + str(item.id))
@@ -54,8 +56,6 @@ def detail_tag(request, pk):
 def edit_tag(request, pk):
     item = get_object_or_404(Tag, id=pk)
 
-    created_by = item.created_by
-    created_at = item.created_at
     identification = item.id
 
     setattr(request, 'view', 'tag')
@@ -65,13 +65,19 @@ def edit_tag(request, pk):
 
         if form.is_valid():
             item = form.save(commit=False)
-            item.created_by = created_by
-            item.created_at = created_at
-            item.updated_at = datetime.now()
-            item.id = identification
-            item.save()
+            # item.id = identification
+            # item.created_by = created_by
+            # item.created_at = created_at
+            # item.save()
 
-            return redirect('/detailTag/' + str(item.id) + '/?id=' + str(item.id))
+            Tag.objects.filter(id=identification).update(
+                name=item.name,
+                description=item.description,
+                updated_by=request.user,
+                updated_at=int(datetime.now(tz=pytz.utc).timestamp() * 1000)
+            )
+
+            return redirect('/detailTag/' + str(identification) + '/?id=' + str(identification))
 
     else:
         form = EditForm(initial={'name': item.name, 'description': item.description})
