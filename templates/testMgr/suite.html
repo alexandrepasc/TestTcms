@@ -1,0 +1,24 @@
+{% extends 'baseTemplate.html' %}
+
+{% load static %}
+
+{% block title %}
+Test Tcms
+{% endblock %}
+
+{% block content %}
+<table class="table">
+    <tr>
+        <td colspan="2">
+            <table width="100%">
+                <tr>
+                    <td width="20px">
+                        <button type="button" class="btn btn-primary" onclick="newItem('newComponent')">New</button>
+                    </td>
+                    <td align="center"><h3 align="center">{{ request.title }}</h3></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+{% endblock %}

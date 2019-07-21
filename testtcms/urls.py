@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^$', views.home, name='home'),
     path('', include('urls.testMgrUrl')),
+    path('', include('urls.suiteUrl')),
     path('', include('urls.testRunUrl')),
     path('', include('urls.loginUrl')),
     path('', include('urls.logoutUrl')),
