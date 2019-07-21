@@ -1,10 +1,9 @@
 <div class="topnav">
     <a {% if request.view == 'home' %} class="active" {% endif %} href="{% url 'home' %}">Home</a>
-    <a {% if request.view == 'testMgr' %} class="active" {% endif %} href="{% url 'testMgr' %}">Test Mgr</a>
     <div class="testMgr">
         <button class="testMgrBtn">Test Mgr&nbsp;&#8681;</button>
         <div class="testMgr-content">
-            <a>Suites</a>
+            <a {% if request.view == 'suite' %} class="active" {% endif %} href="{% url 'suite' %}">Suites</a>
             <a>Cases</a>
         </div>
     </div>
@@ -15,10 +14,10 @@
     <div class="dropdownNav" style="float: right">
         <button class="dropbtn">{{ user.username }}&nbsp;&#8681;</button>
         <div class="dropdownNav-content">
-            <a href="{% url 'product' %}">Products</a>
-            <a href="{% url 'version' %}">Versions</a>
-            <a href="{% url 'component' %}">Components</a>
-            <a href="{% url 'tag' %}">Tags</a>
+            <a {% if request.view == 'product' %} class="active" {% endif %} href="{% url 'product' %}">Products</a>
+            <a {% if request.view == 'version' %} class="active" {% endif %} href="{% url 'version' %}">Versions</a>
+            <a {% if request.view == 'component' %} class="active" {% endif %} href="{% url 'component' %}">Components</a>
+            <a {% if request.view == 'tag' %} class="active" {% endif %} href="{% url 'tag' %}">Tags</a>
             <a href="{% url 'logout' %}">Logout</a>
         </div>
     </div>
