@@ -9,7 +9,7 @@ Test Tcms
 {% block content %}
 <table class="table">
     <tr>
-        <td colspan="2">
+        <td>
             <table width="100%">
                 <tr>
                     <td width="20px">
@@ -18,6 +18,35 @@ Test Tcms
                     <td align="center"><h3 align="center">{{ request.title }}</h3></td>
                 </tr>
             </table>
+        </td>
+    </tr>
+    <tr>
+        <td>search</td>
+    </tr>
+    <tr>
+        <td>
+            {% if items.count > 0 %}
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Author</th>
+                    <th>Product</th>
+                    <th>Type</th>
+                </tr>
+                {% for item in items %}
+                <tr>
+                    <th>{{ item.name }}</th>
+                    <th>{{ item.created_by }}</th>
+                    <th>{{ item.product }}</th>
+                    <th>{{ plan type }}</th>
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+            <div class="card-footer text-muted text-center">
+                (no {{ request.view }}s)
+            </div>
+            {% endif %}
         </td>
     </tr>
 </table>

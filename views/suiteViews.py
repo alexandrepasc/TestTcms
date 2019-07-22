@@ -9,7 +9,9 @@ from mgrtests.models import TestSuite
 
 @login_required
 def suite(request):
+    items = TestSuite.objects.all().order_by('name')
+
     setattr(request, 'view', 'suite')
     setattr(request, 'title', 'Suites')
 
-    return render(request, 'testMgr/suite.html')
+    return render(request, 'testMgr/suite.html', {'items': items})
