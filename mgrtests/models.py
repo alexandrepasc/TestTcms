@@ -42,6 +42,9 @@ class Tag(models.Model):
     # updated_at = models.DateTimeField(null=True)
     updated_at = models.BigIntegerField(null=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Component(models.Model):
     id = models.UUIDField(primary_key=True, unique=True, default=uuid.uuid4())
@@ -53,6 +56,9 @@ class Component(models.Model):
     updated_by = models.ForeignKey(User, related_name='update_components', on_delete=models.CASCADE, null=True)
     # updated_at = models.DateTimeField(null=True)
     updated_at = models.BigIntegerField(null=True)
+
+    def __str__(self):
+        return self.name
 
 
 class TestSuite(models.Model):
