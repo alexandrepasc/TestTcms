@@ -6,6 +6,10 @@
 Test Tcms
 {% endblock %}
 
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/divTable.css' %}">
+{% endblock %}
+
 {% block content %}
 <table class="table">
     <tr>
@@ -13,7 +17,7 @@ Test Tcms
             <table width="100%">
                 <tr>
                     <td width="20px">
-                        <button type="button" class="btn btn-primary" onclick="newItem('newComponent')">New</button>
+                        &nbsp;&nbsp;&nbsp;
                     </td>
                     <td align="center"><h3 align="center">{{ request.title }}</h3></td>
                 </tr>
@@ -21,7 +25,70 @@ Test Tcms
         </td>
     </tr>
     <tr>
-        <td>search</td>
+        <td>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-20 col-md-20 col-sm-20" style="width: 100%;">
+                        <div class="card">
+                            <div class="card-body">
+                                <div style="float: left;">
+                                    <h5 class="card-title">
+                                        Search
+                                    </h5>
+                                </div>
+                                <div style="float: right;"></div>
+                                <form method="post" novalidate>
+                                    {% csrf_token %}
+                                    {% load formTags widget_tweaks %}
+                                    <div class="divTable">
+                                        <div class="divTableRow">
+                                            <div class="divTableCell">
+                                                {{ form.name.label_tag }}
+                                                {% render_field form.name class=form.name|input_class %}
+                                            </div>
+                                            <div class="divTableCell">
+                                                {{ form.created_by.label_tag }}
+                                                {% render_field form.created_by class=form.created_by|input_class %}
+                                            </div>
+                                            <div class="divTableCell">
+                                                {{ form.product.label_tag }}
+                                                {% render_field form.product class=form.product|input_class %}
+                                            </div>
+                                        </div>
+                                        <div class="divTableRow">
+                                            <div class="divTableCell">
+                                                {{ form.component.label_tag }}
+                                                {% render_field form.component class=form.component|input_class %}
+                                            </div>
+                                            <div class="divTableCell">
+                                                {{ form.tag.label_tag }}
+                                                {% render_field form.tag class=form.tag|input_class %}
+                                            </div>
+                                            <div class="divTableCell">
+                                                plan type
+                                            </div>
+                                        </div>
+                                        <div class="divTableRow">
+                                            <div class="divTableCell">
+                                                <button type="button" class="btn btn-primary" onclick="newItem('newComponent')">New</button>
+                                                &nbsp;&nbsp;
+                                                <button class="btn btn-primary">ok</button>
+                                            </div>
+                                            <div class="divTableCell">
+                                                &nbsp;
+                                            </div>
+                                            <div class="divTableCell">
+                                                &nbsp;
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
     </tr>
     <tr>
         <td>
@@ -38,7 +105,7 @@ Test Tcms
                     <th>{{ item.name }}</th>
                     <th>{{ item.created_by }}</th>
                     <th>{{ item.product }}</th>
-                    <th>{{ plan type }}</th>
+                    <th>plan type</th>
                 </tr>
                 {% endfor %}
             </table>
