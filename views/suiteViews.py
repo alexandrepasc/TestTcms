@@ -15,6 +15,18 @@ def suite(request):
     setattr(request, 'view', 'suite')
     setattr(request, 'title', 'Suites')
 
-    form = SearchForm()
+    if request.method == 'POST':
+        form = SearchForm(
+            initial={
+                'name': request.POST.get('name'),
+                'created_by': request.POST.get('created_by'),
+                'product': request.POST.get('product'),
+                'component': request.POST.get('component'),
+                'tag': request.POST.get('tag')
+            }
+        )
+
+    else:
+        form = SearchForm()
 
     return render(request, 'testMgr/suite.html', {'items': items, 'form': form})
