@@ -31,15 +31,11 @@ Test Tcms
                     <div class="col-lg-20 col-md-20 col-sm-20" style="width: 100%;">
                         <div class="card">
                             <div class="card-body">
-                                <div style="float: left;">
-                                    <h5 class="card-title">
-                                        Search
-                                    </h5>
-                                </div>
-                                <div style="float: right;"></div>
+                                <h5 class="card-title">New</h5>
                                 <form method="post" novalidate>
                                     {% csrf_token %}
                                     {% load formTags widget_tweaks %}
+
                                     <div class="divTable">
                                         <div class="divTableRow">
                                             <div class="divTableCell">
@@ -47,15 +43,19 @@ Test Tcms
                                                 {% render_field form.name class=form.name|input_class %}
                                             </div>
                                             <div class="divTableCell">
-                                                {{ form.created_by.label_tag }}
-                                                {% render_field form.created_by class=form.created_by|input_class %}
-                                            </div>
-                                            <div class="divTableCell">
                                                 {{ form.product.label_tag }}
                                                 {% render_field form.product class=form.product|input_class %}
                                             </div>
+                                            <div class="divTableCell">
+                                                {{ form.version.label_tag }}
+                                                {% render_field form.version class=form.version|input_class %}
+                                            </div>
                                         </div>
                                         <div class="divTableRow">
+                                            <div class="divTableCell">
+                                                {{ form.description.label_tag }}
+                                                {% render_field form.description class=form.description|input_class %}
+                                            </div>
                                             <div class="divTableCell">
                                                 {{ form.component.label_tag }}
                                                 {% render_field form.component class=form.component|input_class %}
@@ -64,23 +64,15 @@ Test Tcms
                                                 {{ form.tag.label_tag }}
                                                 {% render_field form.tag class=form.tag|input_class %}
                                             </div>
-                                            <div class="divTableCell">
-                                                plan type
-                                            </div>
                                         </div>
-                                        <div class="divTableRow">
-                                            <div class="divTableCell">
-                                                <button type="button" class="btn btn-primary" onclick="newSuite()">New</button>
-                                                &nbsp;&nbsp;
-                                                <button class="btn btn-primary" type="submit">Search</button>
-                                            </div>
-                                            <div class="divTableCell">
-                                                &nbsp;
-                                            </div>
-                                            <div class="divTableCell">
-                                                &nbsp;
-                                            </div>
-                                        </div>
+                                    </div>
+
+                                    <div style="float: left;">
+                                        <button type="submit" class="btn btn-success">Add</button>
+                                    </div>
+                                    <div style="float: right;">
+                                        <button type="button" class="btn btn-danger" onclick="openSuite()">Cancel
+                                        </button>
                                     </div>
                                 </form>
                             </div>
@@ -90,39 +82,14 @@ Test Tcms
             </div>
         </td>
     </tr>
-    <tr>
-        <td>
-            {% if items.count > 0 %}
-            <table class="table">
-                <tr>
-                    <th>Name</th>
-                    <th>Author</th>
-                    <th>Product</th>
-                    <th>Type</th>
-                </tr>
-                {% for item in items %}
-                <tr>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.created_by }}</td>
-                    <td>{{ item.product }}</td>
-                    <td>plan type</td>
-                </tr>
-                {% endfor %}
-            </table>
-            {% else %}
-            <div class="card-footer text-muted text-center">
-                (no {{ request.view }}s)
-            </div>
-            {% endif %}
-        </td>
-    </tr>
 </table>
 {% endblock %}
 
 {% block script %}
 <script type="text/javascript">
-    function newSuite() {
-        window.location.href = "/newSuite/";
+    function openSuite() {
+        window.location.href = "/suite/";
     }
+
 </script>
 {% endblock %}
