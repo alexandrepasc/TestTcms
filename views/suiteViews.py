@@ -2,8 +2,8 @@ import uuid
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
-from common.utils import get_time_stamp
-from forms.suiteForms import NewForm, SearchForm
+from common.utils import get_datetime, get_time_stamp
+from forms.suiteForms import DetailForm, NewForm, SearchForm
 from mgrtests.models import TestSuite
 
 
@@ -54,3 +54,39 @@ def new_suite(request):
         form = NewForm()
 
     return render(request, 'testMgr/newSuite.html', {'form': form})
+
+
+@login_required
+def detail_suite(request, pk):
+    item = get_object_or_404(TestSuite, id=pk)
+
+    setattr(request, 'view', 'suite')
+    setattr(request, 'title', 'Suites')
+
+    if item.updated_at is not None:
+        updated_at = get_datetime(item.updated_at)
+        
+    else:
+        updated_at = ''
+
+    form = DetailForm(initial={
+        'name': item.name,
+        'description': item.description,
+        'product': item.product,
+        'version': item.version,
+        'component': item.component,
+        'tag': item.tag,
+        'created_by': item.created_by,
+        'created_at': get_datetime(item.created_at),
+        'updated_by': item.updated_by,
+        'updated_at': updated_at
+    })
+
+    form.fields['product'].widget.attrs['disabled'] = True
+    form.fields['version'].widget.attrs['disabled'] = True
+    form.fields['component'].widget.attrs['disabled'] = True
+    form.fields['tag'].widget.attrs['disabled'] = True
+    form.fields['created_at'].widget.attrs['disabled'] = True
+    form.fields['updated_at'].widget.attrs['disabled'] = True
+
+    return render(request, 'testMgr/detailSuite.html', {'item': item, 'form': form})

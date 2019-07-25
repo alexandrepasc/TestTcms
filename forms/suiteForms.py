@@ -43,3 +43,33 @@ class NewForm(forms.ModelForm):
         self.fields['version'].required = False
         self.fields['component'].required = False
         self.fields['tag'].required = False
+
+
+class DetailForm(forms.ModelForm):
+    # name = forms.Textarea(attrs={'readonly': True})
+    name = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 1, 'readonly': True}),
+        max_length=30
+    )
+
+    description = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 5, 'placeholder': 'Suite description', 'readonly': True}),
+        max_length=100,
+    )
+
+    created_by = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 1, 'readonly': True}),
+        label='Created by:'
+    )
+    created_at = forms.DateTimeField(label='Created at:')
+
+    updated_by = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 1, 'readonly': True}),
+        label='Updated by:'
+    )
+    updated_at = forms.DateTimeField(label='Updated at:')
+
+    class Meta:
+        model = TestSuite
+        fields = ['name', 'description', 'product', 'version', 'component', 'tag',
+                  'created_by', 'created_at', 'updated_by', 'updated_at']
