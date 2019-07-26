@@ -30,6 +30,9 @@ class Version(models.Model):
     # updated_at = models.DateTimeField(null=True)
     updated_at = models.BigIntegerField(null=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Tag(models.Model):
     id = models.UUIDField(primary_key=True, unique=True, default=uuid.uuid4())

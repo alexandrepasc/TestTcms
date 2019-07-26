@@ -107,16 +107,21 @@ def edit_suite(request, pk):
         if form.is_valid():
             item = form.save(commit=False)
 
-            TestSuite.objects.filter(id=identification).update(
-                name=item.name,
-                description=item.description,
-                product=item.product,
-                version=item.version,
-                component=item.component,
-                tag=item.tag,
-                updated_by=request.user,
-                updated_at=get_time_stamp()
-            )
+            # TODO: implement this to the others edit
+            obj = TestSuite.objects.filter(name=item.name, description=item.description, product=item.product,
+                                           version=item.version, component=item.component, tag=item.tag)
+
+            if not obj:
+                TestSuite.objects.filter(id=identification).update(
+                    name=item.name,
+                    description=item.description,
+                    product=item.product,
+                    version=item.version,
+                    component=item.component,
+                    tag=item.tag,
+                    updated_by=request.user,
+                    updated_at=get_time_stamp()
+                )
 
             return redirect('/detailSuite/' + str(identification) + '/')
 
