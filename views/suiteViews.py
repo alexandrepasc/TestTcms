@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
 from common.utils import get_datetime, get_time_stamp
-from forms.suiteForms import DetailForm, NewForm, SearchForm
+from forms.suiteForms import DetailForm, EditForm, NewForm, SearchForm
 from mgrtests.models import TestSuite
 
 
@@ -90,3 +90,44 @@ def detail_suite(request, pk):
     form.fields['updated_at'].widget.attrs['disabled'] = True
 
     return render(request, 'testMgr/detailSuite.html', {'item': item, 'form': form})
+
+
+@login_required
+def edit_suite(request, pk):
+    item = get_object_or_404(request, id=pk)
+
+    setattr(request, 'view', 'suite')
+    setattr(request, 'title', 'Suites')
+
+    identification = item.id
+
+    if request.method == 'POST':
+        form = EditForm(request.POST)
+
+        if form.is_valid():
+            item = form.save(commit=False)
+
+            TestSuite.objects.filter(id=identification).update(
+                name=item.name,
+                description=item.description,
+                product=item.product,
+                version=item.version,
+                component=item.component,
+                tag=item.tag,
+                updated_by=request.user,
+                updated_at=get_time_stamp()
+            )
+
+            return redirect('/detailSuite/' + str(identification) + '/')
+
+    else:
+        form = DetailForm(initial={
+            'name': item.name,
+            'description': item.description,
+            'product': item.product,
+            'version': item.version,
+            'component': item.component,
+            'tag': item.tag
+        })
+
+    return render(request, 'testMgr/editSuite.html', {'item': item, 'form': form})
