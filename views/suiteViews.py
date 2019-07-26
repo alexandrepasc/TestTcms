@@ -94,7 +94,7 @@ def detail_suite(request, pk):
 
 @login_required
 def edit_suite(request, pk):
-    item = get_object_or_404(request, id=pk)
+    item = get_object_or_404(TestSuite, id=pk)
 
     setattr(request, 'view', 'suite')
     setattr(request, 'title', 'Suites')
@@ -121,7 +121,7 @@ def edit_suite(request, pk):
             return redirect('/detailSuite/' + str(identification) + '/')
 
     else:
-        form = DetailForm(initial={
+        form = EditForm(initial={
             'name': item.name,
             'description': item.description,
             'product': item.product,

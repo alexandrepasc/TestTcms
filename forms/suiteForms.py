@@ -92,7 +92,7 @@ class EditForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         # first call parent's constructor
-        super(NewForm, self).__init__(*args, **kwargs)
+        super(EditForm, self).__init__(*args, **kwargs)
         # there's a `fields` property now
         self.fields['product'].required = False
         self.fields['version'].required = False
