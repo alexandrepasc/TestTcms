@@ -39,7 +39,7 @@
 
 /* Dropdown button */
 .dropdownNav .dropbtn {
-  font-size: 16px;
+  font-size: 17px;
   border: none;
   outline: none;
   color: white;
@@ -69,6 +69,67 @@
   display: block;
   text-align: left;
 }
+
+
+.testMgr {
+    float: left;
+    overflow: hidden;
+}
+
+.testMgr .testMgrBtn {
+    font-size: 17px;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit; /* Important for vertical align on mobile phones */
+    margin: 0; /* Important for vertical align on mobile phones */
+}
+
+.testMgr-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 0;
+    /*right:0*/
+}
+
+.testMgr-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.testMgr-content a:hover {
+    background-color: #ddd;
+}
+
+.testMgr:hover .testMgr-content {
+    display: block;
+}
+
+.testMgr:hover .testMgrBtn {
+    background-color: #ddd;
+    color: black;
+ }
+
+/* Add a color to the active/current link */
+ .testMgr:hover .testMgrBtn, .testMgr a.active {
+    background-color: #4CAF50;
+    color: white;
+ }
+
+ .testMgr:hover .testMgrBtn {
+    background-color: #ddd;
+    color: black;
+ }
+
 
 /* Add a grey background color to dropdown links on hover */
 .dropdownNav-content a:hover {

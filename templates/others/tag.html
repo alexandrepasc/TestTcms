@@ -13,13 +13,19 @@ Test Tcms
 {% block content %}
 <table class="table">
     <tr>
-        <td>
-            <button type="button" class="btn btn-primary" onclick="newItem('newTag')">New</button>
+        <td colspan="2">
+            <table width="100%">
+                <tr>
+                    <td width="20px">
+                        <button type="button" class="btn btn-primary" onclick="newItem('newTag')">New</button>
+                    </td>
+                    <td align="center"><h3 align="center">{{ request.title }}</h3></td>
+                </tr>
+            </table>
         </td>
-        <td><h3>{{ request.title }}</h3></td>
     </tr>
     <tr>
-        <td width="40%">
+        <td width="20%">
             {% if items.count > 0 %}
             <ul class="list-group" id="listGroup">
                 {% for item in items %}
