@@ -36,43 +36,73 @@ Test Tcms
                                     {% csrf_token %}
                                     {% load formTags widget_tweaks %}
 
-                                    <div class="divTable">
+                                    <div class="divTable" style="width: 100%;">
                                         <div class="divTableRow">
+
                                             <div class="divTableCell">
-                                                {{ form.name.label_tag }}
-                                                {% render_field form.name class=form.name|input_class %}
+
+                                                <div class="divTable">
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell">
+                                                            {{ form.name.label_tag }}
+                                                            {% render_field form.name class=form.name|input_class %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell">
+                                                            {{ form.description.label_tag }}
+                                                            {% render_field form.description class=form.description|input_class %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </div>
-                                            <div class="divTableCell">
-                                                {{ form.product.label_tag }}
-                                                {% render_field form.product class=form.product|input_class %}
-                                            </div>
-                                            <div class="divTableCell">
-                                                {{ form.version.label_tag }}
-                                                {% render_field form.version class=form.version|input_class %}
-                                            </div>
-                                        </div>
-                                        <div class="divTableRow">
-                                            <div class="divTableCell">
-                                                {{ form.description.label_tag }}
-                                                {% render_field form.description class=form.description|input_class %}
-                                            </div>
-                                            <div class="divTableCell">
-                                                {{ form.component.label_tag }}
-                                                {% render_field form.component class=form.component|input_class %}
-                                            </div>
-                                            <div class="divTableCell">
-                                                {{ form.tag.label_tag }}
-                                                {% render_field form.tag class=form.tag|input_class %}
+
+                                            <div class="divTableCell" style="width: 60%;">
+
+                                                <div class="divTable">
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell">
+                                                            {{ form.product.label_tag }}
+                                                            {% render_field form.product class=form.product|input_class %}
+                                                        </div>
+                                                        <div class="divTableCell">
+                                                            {{ form.version.label_tag }}
+                                                            {% render_field form.version class=form.version|input_class %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell">
+                                                            {{ form.component.label_tag }}
+                                                            {% render_field form.component class=form.component|input_class %}
+                                                        </div>
+                                                        <div class="divTableCell">
+                                                            {{ form.tag.label_tag }}
+                                                            {% render_field form.tag class=form.tag|input_class %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell">
+                                                            plan type
+                                                        </div>
+                                                        <div class="divTableCell">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div style="float: left;">
-                                        <button type="submit" class="btn btn-success">Add</button>
-                                    </div>
-                                    <div style="float: right;">
-                                        <button type="button" class="btn btn-danger" onclick="openTemplate('suite')">Cancel
-                                        </button>
+                                    <div class="divTable" style="width: 25%;">
+                                        <div class="divTableRow">
+                                            <div class="divTableCell" style="width: 50%;">
+                                                <button type="submit" class="btn btn-success">Add</button>
+                                            </div>
+                                            <div class="divTableCell" style="width: 50%;">
+                                                <button type="button" class="btn btn-danger" onclick="openTemplate('suite')">Cancel</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
