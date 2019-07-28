@@ -104,7 +104,7 @@ onload="checkProduct()"
                                                 <button type="submit" class="btn btn-success">Save</button>
                                             </div>
                                             <div class="divTableCell" style="width: 50%;">
-                                                <button type="button" class="btn btn-danger" onclick="openDetailSuite()">Cancel</button>
+                                                <button type="button" class="btn btn-danger" onclick="openItemTemplate('detailSuite', '{{ item.id }}')">Cancel</button>
                                             </div>
                                         </div>
                                     </div>
@@ -122,11 +122,8 @@ onload="checkProduct()"
 
 {% block script %}
 <script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/openPage.js' %}"></script>
 <script type="text/javascript">
-    function openDetailSuite() {
-        window.location.href = "/detailSuite/{{ item.id }}/";
-    }
-
     function checkProduct() {
         var element = document.getElementById("id_product");
         if (element.options[element.selectedIndex].value == "") {

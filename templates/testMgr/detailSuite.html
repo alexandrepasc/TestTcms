@@ -119,10 +119,10 @@ Test Tcms
                                         <div class="divTableRow">
                                             <div class="divTableCell" style="width: 50%;">
                                                 <button type="button" class="btn btn-success"
-                                                        onclick="openEditSuite('{{ item.id }}')">Edit</button>
+                                                        onclick="openItemTemplate('editSuite', '{{ item.id }}')">Edit</button>
                                             </div>
                                             <div class="divTableCell" style="width: 50%;">
-                                                <button type="button" class="btn btn-danger" onclick="suite()">Back</button>
+                                                <button type="button" class="btn btn-danger" onclick="openTemplate('suite')">Back</button>
                                             </div>
                                         </div>
                                     </div>
@@ -139,13 +139,5 @@ Test Tcms
 {% endblock %}
 
 {% block script %}
-<script type="text/javascript">
-    function suite() {
-        window.location.href = "/suite/";
-    }
-
-    function openEditSuite(id) {
-        window.location.href = "/editSuite/" + id + "/";
-    }
-</script>
+<script type="text/javascript" src="{% static 'js/openPage.js' %}"></script>
 {% endblock %}
