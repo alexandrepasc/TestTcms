@@ -13,13 +13,19 @@ Test Tcms
 {% block content %}
 <table class="table">
     <tr>
-        <td>
-            <button type="button" class="btn btn-primary" onclick="newItem('newVersion')">New</button>
+        <td colspan="2">
+            <table width="100%">
+                <tr>
+                    <td width="20px">
+                        <button type="button" class="btn btn-primary" onclick="newItem('newVersion')">New</button>
+                    </td>
+                    <td align="center"><h3 align="center">{{ request.title }}</h3></td>
+                </tr>
+            </table>
         </td>
-        <td><h3>{{ request.title }}</h3></td>
     </tr>
     <tr>
-        <td width="40%">
+        <td width="20%">
             {% if items.count > 0 %}
             <ul class="list-group" id="listGroup">
                 {% for item in items %}
@@ -36,7 +42,7 @@ Test Tcms
         </td>
         <td width="60%">
             <div class="container">
-                <iframe id="frame" width="100%" height="400px" style="border: none;"></iframe>
+                <iframe id="frame" width="100%" style="border: none;" onload="resizeIframe(this)"></iframe>
             </div>
         </td>
     </tr>
@@ -47,4 +53,9 @@ Test Tcms
 <script type="text/javascript" src="{% static 'js/itemDetail.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/itemNew.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/listSelectItem.js' %}"></script>
+<script>
+  function resizeIframe(obj) {
+    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+  }
+</script>
 {% endblock %}

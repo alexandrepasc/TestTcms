@@ -1,0 +1,209 @@
+{% extends 'baseTemplate.html' %}
+
+{% load static %}
+
+{% block title %}
+Test Tcms
+{% endblock %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/divTable.css' %}">
+{% endblock %}
+
+{% block bodyParam %}
+onload="checkProduct()"
+{% endblock %}
+
+{% block content %}
+<table class="table">
+    <tr>
+        <td>
+            <table width="100%">
+                <tr>
+                    <td width="20px">
+                        &nbsp;&nbsp;&nbsp;
+                    </td>
+                    <td align="center"><h3 align="center">{{ request.title }}</h3></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-20 col-md-20 col-sm-20" style="width: 100%;">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Edit</h5>
+                                <form method="post" novalidate>
+                                    {% csrf_token %}
+                                    {% load formTags widget_tweaks %}
+
+                                    <div class="divTable" style="width: 100%;">
+                                        <div class="divTableRow">
+
+                                            <div class="divTableCell">
+
+                                                <div class="divTable">
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell">
+                                                            {{ form.name.label_tag }}
+                                                            {% render_field form.name class=form.name|input_class %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell">
+                                                            {{ form.description.label_tag }}
+                                                            {% render_field form.description class=form.description|input_class %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="divTableCell" style="width: 60%;">
+
+                                                <div class="divTable">
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell">
+                                                            {{ form.product.label_tag }}
+                                                            {% render_field form.product class=form.product|input_class %}
+                                                        </div>
+                                                        <div class="divTableCell">
+                                                            {{ form.version.label_tag }}
+                                                            {% render_field form.version class=form.version|input_class %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell">
+                                                            {{ form.component.label_tag }}
+                                                            {% render_field form.component class=form.component|input_class %}
+                                                        </div>
+                                                        <div class="divTableCell">
+                                                            {{ form.tag.label_tag }}
+                                                            {% render_field form.tag class=form.tag|input_class %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell">
+                                                            plan type
+                                                        </div>
+                                                        <div class="divTableCell">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="divTable" style="width: 25%;">
+                                        <div class="divTableRow">
+                                            <div class="divTableCell" style="width: 50%;">
+                                                <button type="submit" class="btn btn-success">Save</button>
+                                            </div>
+                                            <div class="divTableCell" style="width: 50%;">
+                                                <button type="button" class="btn btn-danger" onclick="openItemTemplate('detailSuite', '{{ item.id }}')">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/openPage.js' %}"></script>
+<script type="text/javascript">
+    function checkProduct() {
+        var element = document.getElementById("id_product");
+        if (element.options[element.selectedIndex].value == "") {
+            document.getElementById("id_version").disabled = true;
+            $("#id_version").empty();
+            $("#id_version").append('<option value selected>---------</option>');
+        }
+        else {
+            var id = $("#id_product").val();
+            var versionId = $("#id_version").val();
+
+            $.ajax({
+                url: '/ajax/getProdVersion/',
+
+                data: {
+                    'id': id
+                },
+
+                dataType: 'json',
+
+                success: function (data) {
+                    if (data.none) {
+                        $("#id_version").empty();
+                        document.getElementById("id_version").disabled = true;
+                    }
+                    else {
+                        $("#id_version").empty();
+                        $("#id_version").append('<option value>---------</option>');
+
+                        $(data.versions).each(function(index) {
+                            var out = '<option value="' + this.id + '"';
+
+                            if (this.id == versionId) {
+                                out = out + ' selected';
+                            }
+                            out = out + '>' + this.name + '</option>';
+                            /*$("#id_version").append('<option value="' + this.id + '">' + this.name + '</option>');*/
+                            $("#id_version").append(out);
+                        });
+
+                        document.getElementById("id_version").disabled = false;
+                    }
+                }
+            });
+        }
+    }
+</script>
+<script>
+    $("#id_product").change(function () {
+
+        var id = $(this).val();
+
+        $.ajax({
+            url: '/ajax/getProdVersion/',
+
+            data: {
+                'id': id
+            },
+
+            dataType: 'json',
+
+            success: function (data) {
+                if (data.none) {
+                    $("#id_version").empty();
+                    document.getElementById("id_version").disabled = true;
+                    $("#id_version").append('<option value selected>---------</option>');
+                }
+                else {
+                    $("#id_version").empty();
+                    $("#id_version").append('<option value selected>---------</option>');
+
+                    $(data.versions).each(function(index) {
+                        $("#id_version").append('<option value="' + this.id + '">' + this.name + '</option>');
+                    });
+
+                    document.getElementById("id_version").disabled = false;
+                }
+            }
+        });
+
+    });
+  </script>
+{% endblock %}
