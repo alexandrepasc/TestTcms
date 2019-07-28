@@ -10,6 +10,10 @@ Test Tcms
 <link rel="stylesheet" href="{% static 'css/divTable.css' %}">
 {% endblock %}
 
+{% block bodyParam %}
+onload="checkProduct()"
+{% endblock %}
+
 {% block content %}
 <table class="table">
     <tr>
@@ -117,9 +121,92 @@ Test Tcms
 {% endblock %}
 
 {% block script %}
+<script src="{% static 'js/jquery-3.4.1.js' %}"></script>
 <script type="text/javascript">
     function openDetailSuite() {
         window.location.href = "/detailSuite/{{ item.id }}/";
     }
+
+    function checkProduct() {
+        var element = document.getElementById("id_product");
+        if (element.options[element.selectedIndex].value == "") {
+            document.getElementById("id_version").disabled = true;
+            $("#id_version").empty();
+            $("#id_version").append('<option value selected>---------</option>');
+        }
+        else {
+            var id = $("#id_product").val();
+            var versionId = $("#id_version").val();
+
+            $.ajax({
+                url: '/ajax/getProdVersion/',
+
+                data: {
+                    'id': id
+                },
+
+                dataType: 'json',
+
+                success: function (data) {
+                    if (data.none) {
+                        $("#id_version").empty();
+                        document.getElementById("id_version").disabled = true;
+                    }
+                    else {
+                        $("#id_version").empty();
+                        $("#id_version").append('<option value>---------</option>');
+
+                        $(data.versions).each(function(index) {
+                            var out = '<option value="' + this.id + '"';
+
+                            if (this.id == versionId) {
+                                out = out + ' selected';
+                            }
+                            out = out + '>' + this.name + '</option>';
+                            /*$("#id_version").append('<option value="' + this.id + '">' + this.name + '</option>');*/
+                            $("#id_version").append(out);
+                        });
+
+                        document.getElementById("id_version").disabled = false;
+                    }
+                }
+            });
+        }
+    }
 </script>
+<script>
+    $("#id_product").change(function () {
+
+        var id = $(this).val();
+
+        $.ajax({
+            url: '/ajax/getProdVersion/',
+
+            data: {
+                'id': id
+            },
+
+            dataType: 'json',
+
+            success: function (data) {
+                if (data.none) {
+                    $("#id_version").empty();
+                    document.getElementById("id_version").disabled = true;
+                    $("#id_version").append('<option value selected>---------</option>');
+                }
+                else {
+                    $("#id_version").empty();
+                    $("#id_version").append('<option value selected>---------</option>');
+
+                    $(data.versions).each(function(index) {
+                        $("#id_version").append('<option value="' + this.id + '">' + this.name + '</option>');
+                    });
+
+                    document.getElementById("id_version").disabled = false;
+                }
+            }
+        });
+
+    });
+  </script>
 {% endblock %}

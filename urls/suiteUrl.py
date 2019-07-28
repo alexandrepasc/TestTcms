@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'^detailSuite/(?P<pk>[0-9a-f-]+)/$', suiteViews.detail_suite, name='detailSuite'),
     url(r'^editSuite/(?P<pk>[0-9a-f-]+)$', suiteViews.edit_suite, name='editSuite'),
     url(r'^editSuite/(?P<pk>[0-9a-f-]+)/$', suiteViews.edit_suite, name='editSuite'),
+    url(r'^ajax/getProdVersion/$', suiteViews.get_prod_version, name='getProdVersion'),
 ]

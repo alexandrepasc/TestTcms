@@ -1,10 +1,11 @@
 import uuid
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from common.utils import get_datetime, get_time_stamp
 from forms.suiteForms import DetailForm, EditForm, NewForm, SearchForm
-from mgrtests.models import TestSuite
+from mgrtests.models import TestSuite, Version
 
 
 @login_required
@@ -136,3 +137,26 @@ def edit_suite(request, pk):
         })
 
     return render(request, 'testMgr/editSuite.html', {'item': item, 'form': form})
+
+
+def get_prod_version(request):
+    if request.GET.get('id', None) != '':
+        pk = request.GET.get('id', None)
+
+        items = Version.objects.filter(product=pk).order_by('-name')
+
+        data = {
+            'none': 'none'
+        }
+
+        if items.count() > 0:
+            data = {}
+            data['versions'] = []
+
+            for item in items:
+                data['versions'].append({'id': str(item.id), 'name': item.name})
+                # print(data['versions'][len(data['versions']) - 1])
+
+    print(data)
+
+    return JsonResponse(data)
