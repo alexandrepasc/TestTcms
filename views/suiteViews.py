@@ -26,6 +26,23 @@ def suite(request):
             }
         )
 
+        print('------------')
+        print(request.POST.get('product'))
+        print('------------')
+
+        search = TestSuite.objects.filter(
+            name__icontains=request.POST.get('name'),
+            created_by__username__icontains=request.POST.get('created_by'),
+            **filters('product__id', request.POST.get('product')),
+            **filters('component__id', request.POST.get('component')),
+            **filters('tag__id', request.POST.get('tag')),
+            #product__id=request.POST.get('product')
+            #component=request.POST.get('component'),
+            #tag__Tag_id=request.POST.get('tag')
+        ).order_by('name')
+
+        return render(request, 'testMgr/suite.html', {'items': search, 'form': form})
+
     else:
         form = SearchForm()
 
@@ -160,3 +177,10 @@ def get_prod_version(request):
     print(data)
 
     return JsonResponse(data)
+
+
+def filters(field, var):
+    if var != '':
+        return {field: var}
+    else:
+        return {}
