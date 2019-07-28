@@ -1,7 +1,3 @@
-function openDetail(view, id) {
-    window.location.href = "/" + view + "/" + id;
-}
-
 function overItem(id) {
     document.getElementById(id).style.cursor = 'pointer';
     document.getElementById(id).style.color = '#FFFFFF';
