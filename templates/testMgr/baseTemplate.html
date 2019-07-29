@@ -1,0 +1,81 @@
+{% extends 'baseTemplate.html' %}
+
+{% load static %}
+
+{% block title %}
+Test Tcms
+{% endblock %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/divTable.css' %}">
+{% endblock %}
+
+{% block content %}
+<table class="table">
+    <tr>
+        <td>
+            <table width="100%">
+                <tr>
+                    <td width="20px">
+                        &nbsp;&nbsp;&nbsp;
+                    </td>
+                    <td align="center"><h3 align="center">{{ request.title }}</h3></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-20 col-md-20 col-sm-20" style="width: 100%;">
+                        <div class="card">
+                            <div class="card-body">
+                                <div style="float: left;">
+                                    <h5 class="card-title">
+                                        Search
+                                    </h5>
+                                </div>
+                                <div style="float: right;"></div>
+                                <form method="post" novalidate>
+                                    {% csrf_token %}
+                                    {% load formTags widget_tweaks %}
+
+                                    {% block searchContent %}
+                                    {% endblock %}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            {% if items.count > 0 %}
+            <table class="table">
+                <tr>
+                    {% block listHead %}
+                    {% endblock %}
+                </tr>
+                {% for item in items %}
+                    {% block listRows %}
+                    {% endblock %}
+                {% endfor %}
+            </table>
+            {% else %}
+            <div class="card-footer text-muted text-center">
+                (no {{ request.view }}s)
+            </div>
+            {% endif %}
+        </td>
+    </tr>
+</table>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="{% static 'js/openIdDetail.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/openPage.js' %}"></script>
+{% endblock %}

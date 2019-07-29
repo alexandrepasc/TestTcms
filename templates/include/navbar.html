@@ -4,7 +4,7 @@
         <button class="testMgrBtn">Test Mgr&nbsp;&#8681;</button>
         <div class="testMgr-content">
             <a {% if request.view == 'suite' %} class="active" {% endif %} href="{% url 'suite' %}">Suites</a>
-            <a>Cases</a>
+            <a {% if request.view == 'case' %} class="active" {% endif %} href="{% url 'case' %}">Cases</a>
         </div>
     </div>
     <a {% if request.view == 'testRun' %} class="active" {% endif %} href="{% url 'testRun' %}">Test Runs</a>
