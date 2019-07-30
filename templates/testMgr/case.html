@@ -1,1 +1,55 @@
 {% extends 'testMgr/baseTemplate.html' %}
+
+{% block searchContent %}
+{% load formTags widget_tweaks %}
+<div class="divTable">
+    <div class="divTableRow">
+        <div class="divTableCell">
+            {{ form.name.label_tag }}
+            {% render_field form.name class=form.name|input_class %}
+        </div>
+        <div class="divTableCell">
+            {{ form.created_by.label_tag }}
+            {% render_field form.created_by class=form.created_by|input_class %}
+        </div>
+        <div class="divTableCell">
+            {{ form_suite.suites.label_tag }}
+            {% render_field form_suite.suites class=form_suite.suites|input_class %}
+        </div>
+    </div>
+    <div class="divTableRow">
+        <div class="divTableCell">
+            {{ form.product.label_tag }}
+            {% render_field form.product class=form.product|input_class %}
+        </div>
+        <div class="divTableCell">
+            {{ form.component.label_tag }}
+            {% render_field form.component class=form.component|input_class %}
+        </div>
+        <div class="divTableCell">
+            {{ form.tag.label_tag }}
+            {% render_field form.tag class=form.tag|input_class %}
+        </div>
+    </div>
+</div>
+<div class="divTable" style="width: 25%;">
+    <div class="divTableRow">
+        <div class="divTableCell" style="width: 33%;">
+            <button type="button" class="btn btn-primary" onclick="openTemplate('newCase')">New</button>
+        </div>
+        <div class="divTableCell" style="width: 33%;">
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+        <div class="divTableCell" style="width: 33%;">
+            <button class="btn btn-primary" type="button" onclick="openTemplate('case')">Clear</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block listHead %}
+<th>Name</th>
+<th>Author</th>
+<th>Product</th>
+<th>Suite</th>
+{% endblock %}
