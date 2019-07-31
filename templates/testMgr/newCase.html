@@ -1,1 +1,67 @@
 {% extends 'testMgr/newBaseTemplate.html' %}
+
+{% load static %}
+
+{% block bodyParam %}
+onload="getSuites()"
+{% endblock %}
+
+{% block formContent %}
+
+{% load formTags widget_tweaks %}
+
+<div class="divTable" style="width: 100%;">
+    <div class="divTableRow">
+        <div class="divTableCell">
+
+            <div class="divTable">
+                <div class="divTableRow">
+                    <div class="divTableCell">
+                        {{ form.name.label_tag }}
+                        {% render_field form.name class=form.name|input_class %}
+                    </div>
+                </div>
+                <div class="divTableRow">
+                    <div class="divTableCell">
+                        {{ form.description.label_tag }}
+                        {% render_field form.description class=form.description|input_class %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="divTableCell" style="width: 60%;">
+
+            <div class="divTable">
+                <div class="divTableRow">
+                    <div class="divTableCell">
+                        {{ form.suites.label_tag }}
+                        {% render_field form.suites class=form.suites|input_class %}
+                    </div>
+                    <div class="divTableCell">
+                        {{ form.product.label_tag }}
+                        {% render_field form.product class=form.product|input_class %}
+                    </div>
+                </div>
+                <div class="divTableRow">
+                    <div class="divTableCell">
+                        {{ form.component.label_tag }}
+                        {% render_field form.component class=form.component|input_class %}
+                    </div>
+                    <div class="divTableCell">
+                        {{ form.tag.label_tag }}
+                        {% render_field form.tag class=form.tag|input_class %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script2 %}
+<script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+<script src="{% static 'js/getSuites.js' %}"></script>
+{% endblock %}
