@@ -12,9 +12,14 @@ class SearchForm(forms.ModelForm):
         label='Author:'
     )
 
+    suites = forms.CharField(
+        label='Suites:',
+        widget=forms.Select()
+    )
+
     class Meta:
         model = TestCase
-        fields = ['name', 'created_by', 'product', 'component', 'tag']
+        fields = ['name', 'created_by', 'suites', 'product', 'component', 'tag']
 
     def __init__(self, *args, **kwargs):
         # first call parent's constructor
@@ -22,18 +27,3 @@ class SearchForm(forms.ModelForm):
         # there's a `fields` property now
         self.fields['name'].required = False
         self.fields['created_by'].required = False
-
-
-# TODO: this select doesn't have the same style as the others
-Suites_choice = TestSuite.objects.values_list('id', 'name')
-
-
-class SearchSuiteForm(forms.ModelForm):
-    suites = forms.CharField(
-        label='Suites:',
-        widget=forms.Select(choices=Suites_choice)
-    )
-
-    class Meta:
-        model = TestSuite
-        fields = ['suites']

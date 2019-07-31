@@ -1,5 +1,11 @@
 {% extends 'testMgr/baseTemplate.html' %}
 
+{% load static %}
+
+{% block bodyParam %}
+onload="getSuites()"
+{% endblock %}
+
 {% block searchContent %}
 {% load formTags widget_tweaks %}
 <div class="divTable">
@@ -13,8 +19,8 @@
             {% render_field form.created_by class=form.created_by|input_class %}
         </div>
         <div class="divTableCell">
-            {{ form_suite.suites.label_tag }}
-            {% render_field form_suite.suites class=form_suite.suites|input_class %}
+            {{ form.suites.label_tag }}
+            {% render_field form.suites class=form.suites|input_class %}
         </div>
     </div>
     <div class="divTableRow">
@@ -52,4 +58,25 @@
 <th>Author</th>
 <th>Product</th>
 <th>Suite</th>
+{% endblock %}
+
+{% block script2 %}
+<script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+<script>
+    function getSuites() {
+        $.ajax({
+            url: '/ajax/getSuites/',
+
+            dataType: 'json',
+
+            success: function (data) {
+                $("#id_suites").empty();
+
+                 $(data.suites).each(function(index) {
+                    $("#id_suites").append('<option value="' + this.id + '">' + this.name + '</option>');
+                 });
+            }
+        });
+    }
+</script>
 {% endblock %}
