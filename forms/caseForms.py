@@ -45,6 +45,14 @@ class NewForm(forms.ModelForm):
         widget=forms.Select()
     )
 
+    actions = forms.CharField(
+        max_length=50
+    )
+
+    expected = forms.CharField(
+        max_length=50
+    )
+
     class Meta:
         model = TestCase
         fields = ['name', 'description', 'suites', 'product', 'component', 'tag', 'actions', 'expected', 'notes']

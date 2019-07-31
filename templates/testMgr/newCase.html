@@ -59,6 +59,40 @@ onload="getSuites()"
     </div>
 </div>
 
+<div class="divTable" style="width: 100%;">
+    <div class="divTableRow">
+        <div class="divTableCell">
+        </div>
+    </div>
+    <div class="divTableRow">
+        <div class="divTableCell">
+        </div>
+    </div>
+    <div class="divTableRow" style="border-top: 1px solid rgba(0, 0, 0, .1)">
+        <div class="divTableCell">
+        </div>
+    </div>
+    <div class="divTableRow">
+        <div class="divTableCell">
+        </div>
+    </div>
+</div>
+
+<div class="divTable" style="width: 100%;">
+    <div class="divTableRow">
+        <div class="divTableCell">
+            {{ form.actions.label_tag }}
+            {% render_field form.actions class=form.actions|input_class %}
+        </div>
+         <div class="divTableCell">
+            {{ form.expected.label_tag }}
+            {% render_field form.expected class=form.expected|input_class %}
+         </div>
+        <div class="divTableCell">
+            <button class="btn btn-primary" type="button" onclick="">Add</button>
+         </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block script2 %}
