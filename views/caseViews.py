@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
-from forms.caseForms import SearchForm
+from forms.caseForms import NewForm, SearchForm
 from mgrtests.models import TestCase, TestSuite
 
 
@@ -21,6 +21,17 @@ def case(request):
     return render(request, 'testMgr/case.html', {'items': items, 'form': form})
 
 
+@login_required
+def new_case(request):
+    setattr(request, 'view', 'case')
+    setattr(request, 'title', 'Cases')
+
+    form = NewForm()
+
+    return render(request, 'testMgr/newCase.html', {'form': form})
+
+
+@login_required
 def get_suites(request):
     items = TestSuite.objects.all().order_by('name')
 
