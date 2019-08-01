@@ -25,6 +25,9 @@ onload="getSuites()"
                     <div class="divTableCell">
                         {{ form.description.label_tag }}
                         {% render_field form.description class=form.description|input_class %}
+                        <small class="form-text text-muted">
+                            {{ form.description.help_text|safe }}
+                        </small>
                     </div>
                 </div>
             </div>
@@ -55,6 +58,18 @@ onload="getSuites()"
                 </div>
             </div>
 
+            <div class="divTable">
+                <div class="divTableRow">
+                    <div class="divTableCell">
+                        {{ form.notes.label_tag }}
+                        {% render_field form.notes class=form.notes|input_class %}
+                        <small class="form-text text-muted">
+                            {{ form.notes.help_text|safe }}
+                        </small>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
@@ -80,17 +95,32 @@ onload="getSuites()"
 
 <div class="divTable" style="width: 100%;">
     <div class="divTableRow">
-        <div class="divTableCell">
+        <div class="divTableCell" style="width: 45%;">
             {{ form.actions.label_tag }}
             {% render_field form.actions class=form.actions|input_class %}
+            <div class="invalid-feedback" id="div_actions"></div>
         </div>
-         <div class="divTableCell">
+         <div class="divTableCell" style="width: 45%;">
             {{ form.expected.label_tag }}
             {% render_field form.expected class=form.expected|input_class %}
+             <div class="invalid-feedback" id="div_expected"></div>
          </div>
+        <div class="divTableCell" style="vertical-align:bottom; width: 10%;">
+            <button class="btn btn-primary" type="button" onclick="addStep()">Add</button>
+            <div class="invalid-feedback" id="adjust">&nbsp;</div>
+         </div>
+    </div>
+    <div class="divTableRow">
         <div class="divTableCell">
-            <button class="btn btn-primary" type="button" onclick="">Add</button>
-         </div>
+            <select id="list_actions" multiple="multiple" style="width:100%" disabled>
+            </select>
+        </div>
+        <div class="divTableCell">
+            <select id="list_expected" multiple="multiple" style="width:100%" disabled>
+            </select>
+        </div>
+        <div class="divTableCell">
+        </div>
     </div>
 </div>
 {% endblock %}
@@ -98,4 +128,38 @@ onload="getSuites()"
 {% block script2 %}
 <script src="{% static 'js/jquery-3.4.1.js' %}"></script>
 <script src="{% static 'js/getSuites.js' %}"></script>
+<script>
+    function addStep() {
+        document.getElementById("div_actions").innerText = '';
+        document.getElementById("div_expected").innerText = '';
+        document.getElementById("div_actions").style.display = "none";
+        document.getElementById("div_expected").style.display = "none";
+        document.getElementById("adjust").style.display = "none";
+
+        var actions = document.getElementById("id_actions").value;
+        var expected = document.getElementById("id_expected").value;
+
+        if (actions == "") {
+            document.getElementById("div_actions").innerText = 'Insert an action.';
+            document.getElementById("div_actions").style.display = "block";
+            document.getElementById("adjust").style.display = "block";
+            return null;
+        }
+
+        if (document.getElementById("id_expected").value == "") {
+            document.getElementById("div_expected").innerText = 'Insert an expected.';
+            document.getElementById("div_expected").style.display = "block";
+            document.getElementById("adjust").style.display = "block";
+            return null;
+        }
+
+        $("#list_actions").append('<option value="' + actions + '" selected>' + actions + '</option>');
+        $("#list_expected").append('<option value="' + expected + '" selected>' + expected + '</option>');
+
+        $("#list_actions").selected = true;
+
+        document.getElementById("id_actions").value = "";
+        document.getElementById("id_expected").value = "";
+    }
+</script>
 {% endblock %}

@@ -45,6 +45,12 @@ class NewForm(forms.ModelForm):
         widget=forms.Select()
     )
 
+    notes = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 5}),
+        max_length=2000,
+        help_text='The max length of the text is 2000.',
+    )
+
     actions = forms.CharField(
         max_length=50
     )
