@@ -112,14 +112,27 @@ onload="getSuites()"
     </div>
     <div class="divTableRow">
         <div class="divTableCell">
-            <select id="list_actions" multiple="multiple" style="width:100%" disabled>
+            <select id="list_actions" multiple="multiple" style="width:100%; height:400px;" disabled>
             </select>
         </div>
         <div class="divTableCell">
-            <select id="list_expected" multiple="multiple" style="width:100%" disabled>
+            <select id="list_expected" multiple="multiple" style="width:100%; height:400px;" disabled>
             </select>
         </div>
         <div class="divTableCell">
+        </div>
+    </div>
+</div>
+<div class="divTable" style="width: 25%;">
+    <div class="divTableRow">
+        <div class="divTableCell" style="width: 33%;">
+            <button type="submit" class="btn btn-success">Add</button>
+        </div>
+        <div class="divTableCell" style="width: 33%;">
+            <button class="btn btn-primary" type="button" onclick="openTemplate('newCase')">Clear</button>
+        </div>
+        <div class="divTableCell" style="width: 33%;">
+            <button type="button" class="btn btn-danger" onclick="openTemplate('case')">Cancel</button>
         </div>
     </div>
 </div>
@@ -129,6 +142,7 @@ onload="getSuites()"
 <script src="{% static 'js/jquery-3.4.1.js' %}"></script>
 <script src="{% static 'js/getSuites.js' %}"></script>
 <script>
+    // TODO: scroll o the last element added
     function addStep() {
         document.getElementById("div_actions").innerText = '';
         document.getElementById("div_expected").innerText = '';
@@ -136,30 +150,47 @@ onload="getSuites()"
         document.getElementById("div_expected").style.display = "none";
         document.getElementById("adjust").style.display = "none";
 
-        var actions = document.getElementById("id_actions").value;
-        var expected = document.getElementById("id_expected").value;
+        var actionsVal = document.getElementById("id_actions").value;
+        var expectedVal = document.getElementById("id_expected").value;
 
-        if (actions == "") {
+        if (document.getElementById("list_actions").childElementCount > 0) {
+            document.getElementById("list_actions").childNodes.forEach(
+                function(element) {
+                    element.selected = false;
+                }
+            );
+        }
+
+        if (document.getElementById("list_expected").childElementCount > 0) {
+            document.getElementById("list_expected").childNodes.forEach(
+                function(element) {
+                    element.selected = false;
+                }
+            );
+        }
+
+        if (actionsVal == "") {
             document.getElementById("div_actions").innerText = 'Insert an action.';
             document.getElementById("div_actions").style.display = "block";
             document.getElementById("adjust").style.display = "block";
             return null;
         }
 
-        if (document.getElementById("id_expected").value == "") {
+        if (expectedVal == "") {
             document.getElementById("div_expected").innerText = 'Insert an expected.';
             document.getElementById("div_expected").style.display = "block";
             document.getElementById("adjust").style.display = "block";
             return null;
         }
 
-        $("#list_actions").append('<option value="' + actions + '" selected>' + actions + '</option>');
-        $("#list_expected").append('<option value="' + expected + '" selected>' + expected + '</option>');
+        $("#list_actions").append('<option value="' + actionsVal + '" selected>' + actionsVal + '</option>');
+        $("#list_expected").append('<option value="' + expectedVal + '" selected>' + expectedVal + '</option>');
 
         $("#list_actions").selected = true;
 
         document.getElementById("id_actions").value = "";
         document.getElementById("id_expected").value = "";
+        document.getElementById("id_actions").focus();
     }
 </script>
 {% endblock %}
