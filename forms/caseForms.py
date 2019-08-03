@@ -62,3 +62,15 @@ class NewForm(forms.ModelForm):
     class Meta:
         model = TestCase
         fields = ['name', 'description', 'suites', 'product', 'component', 'tag', 'actions', 'expected', 'notes']
+
+    def __init__(self, *args, **kwargs):
+        # first call parent's constructor
+        super(NewForm, self).__init__(*args, **kwargs)
+        # there's a `fields` property now
+        self.fields['suites'].required = False
+        self.fields['product'].required = False
+        self.fields['component'].required = False
+        self.fields['tag'].required = False
+        self.fields['notes'].required = False
+        self.fields['actions'].required = False
+        self.fields['expected'].required = False
