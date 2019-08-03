@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from common.utils import get_datetime, get_time_stamp
 from forms.caseForms import NewForm, SearchForm
-from mgrtests.models import TestCase, TestSuite
+from mgrtests.models import TestCase, TestSuite, TestSuitesCases
 
 
 @login_required
@@ -52,6 +52,12 @@ def new_case(request):
                 item.expected = None
 
             item.save()
+
+            if request.POST.get('suites') != '':
+                suite = TestSuite.objects.get(id=request.POST.get('suites'))
+
+                suite_case = TestSuitesCases(pk=uuid.uuid4(), case=item, suite=suite)
+                suite_case.save()
 
             return redirect('/case/')
 
