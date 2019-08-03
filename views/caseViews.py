@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
+from common.utils import get_datetime, get_time_stamp
 from forms.caseForms import NewForm, SearchForm
 from mgrtests.models import TestCase, TestSuite
 
@@ -26,7 +27,36 @@ def new_case(request):
     setattr(request, 'view', 'case')
     setattr(request, 'title', 'Cases')
 
-    form = NewForm()
+    if request.method == 'POST':
+        form = NewForm(request.POST)
+
+        print(request.POST.get('actions'))
+        if request.POST.get('actions') != '':
+            aux_actions = request.POST.get('actions')[:-1].split('£,')
+            aux_expected = request.POST.get('expected')[:-1].split('£,')
+
+        if form.is_valid():
+            item = form.save(commit=False)
+            item.id = uuid.uuid4()
+            item.created_by = request.user
+            item.created_at = get_time_stamp()
+
+            if request.POST.get('notes') == '':
+                item.notes = None
+
+            if request.POST.get('actions') != '':
+                item.actions = aux_actions
+                item.expected = aux_expected
+            else:
+                item.actions = None
+                item.expected = None
+
+            item.save()
+
+            return redirect('/case/')
+
+    else:
+        form = NewForm()
 
     return render(request, 'testMgr/newCase.html', {'form': form})
 

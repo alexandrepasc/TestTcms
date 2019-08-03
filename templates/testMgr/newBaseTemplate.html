@@ -32,7 +32,7 @@ Test Tcms
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">New</h5>
-                                <form method="post" novalidate>
+                                <form method="post" novalidate {% block formParams %}{% endblock %}>
                                     {% csrf_token %}
 
                                     {% block formContent %}
