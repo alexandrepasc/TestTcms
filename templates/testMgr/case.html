@@ -60,6 +60,16 @@ onload="getSuites()"
 <th>Suite</th>
 {% endblock %}
 
+{% block listRows %}
+<tr onclick="openItemTemplate('detailCase', '{{ item.id }}')" onmouseover="overItem('{{ item.id }}')"
+    onmouseout="outItem('{{ item.id }}')" style="cursor: pointer;" id="{{ item.id }}">
+<td>{{ item.name }}</td>
+<td>{{ item.created_by }}</td>
+<td>{{ item.product }}</td>
+<td>{{ item.suite }}</td>
+</tr>
+{% endblock %}
+
 {% block script2 %}
 <script src="{% static 'js/jquery-3.4.1.js' %}"></script>
 <script src="{% static 'js/getSuites.js' %}"></script>
