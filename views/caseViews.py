@@ -17,7 +17,50 @@ def case(request):
     setattr(request, 'view', 'case')
     setattr(request, 'title', 'Cases')
 
-    form = SearchForm()
+    if request.method == 'POST':
+        form = SearchForm(
+            initial={
+                'name': request.POST.get('name'),
+                'created_by': request.POST.get('created_by'),
+                'suites': request.POST.get('suites'),
+                'suite_select': request.POST.get('suites'),
+                'product': request.POST.get('product'),
+                'component': request.POST.get('component'),
+                'tag': request.POST.get('tag')
+            }
+        )
+
+        if request.POST.get('suites') != '':
+            search_suite = list(TestSuitesCases.objects.filter(
+                suite=request.POST.get('suites')
+            ).values('case'))
+
+            case_list = []
+
+            for cenas in search_suite:
+                case_list.append(str(cenas.get('case')))
+
+            print(case_list)
+
+        else:
+            case_list = ''
+
+        search = TestCase.objects.filter(
+            name__icontains=request.POST.get('name'),
+            created_by__username__icontains=request.POST.get('created_by'),
+            **filters('product__id', request.POST.get('product')),
+            **filters('component__id', request.POST.get('component')),
+            **filters('tag__id', request.POST.get('tag')),
+        ).order_by('name')
+
+        if case_list != '':
+            search_ = search.filter(id__in=case_list)
+            search = search_
+
+        return render(request, 'testMgr/case.html', {'items': search, 'form': form})
+
+    else:
+        form = SearchForm()
 
     return render(request, 'testMgr/case.html', {'items': items, 'form': form})
 
@@ -79,3 +122,17 @@ def get_suites(request):
         data['suites'].append({'id': str(item.id), 'name': item.name})
 
     return JsonResponse(data)
+
+
+def filters(field, var):
+    if var != '':
+        return {field: var}
+    else:
+        return {}
+
+
+def filters_(field, var, id_list):
+    if var != '':
+        return {field: id_list}
+    else:
+        return {}
