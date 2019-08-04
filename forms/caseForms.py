@@ -16,10 +16,11 @@ class SearchForm(forms.ModelForm):
         label='Suites:',
         widget=forms.Select()
     )
+    suite_select = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
         model = TestCase
-        fields = ['name', 'created_by', 'suites', 'product', 'component', 'tag']
+        fields = ['name', 'created_by', 'suites', 'suite_select', 'product', 'component', 'tag']
 
     def __init__(self, *args, **kwargs):
         # first call parent's constructor

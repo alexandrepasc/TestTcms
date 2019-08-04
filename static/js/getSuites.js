@@ -7,8 +7,15 @@ function getSuites() {
         success: function (data) {
             $("#id_suites").empty();
 
+            var select;
              $(data.suites).each(function(index) {
-                $("#id_suites").append('<option value="' + this.id + '">' + this.name + '</option>');
+                if ($("#id_suite_select").val() == this.id) {
+                    select = " selected";
+                }
+                else {
+                    select = "";
+                }
+                $("#id_suites").append('<option value="' + this.id + '"' + select + '>' + this.name + '</option>');
              });
         }
     });

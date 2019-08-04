@@ -21,6 +21,7 @@ onload="getSuites()"
         <div class="divTableCell">
             {{ form.suites.label_tag }}
             {% render_field form.suites class=form.suites|input_class %}
+            {% render_field form.suite_select class=form.suite_select|input_class %}
         </div>
     </div>
     <div class="divTableRow">
