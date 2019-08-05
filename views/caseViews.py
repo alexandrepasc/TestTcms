@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from common.utils import get_datetime, get_time_stamp
-from forms.caseForms import NewForm, SearchForm
+from forms.caseForms import DetailForm, NewForm, SearchForm
 from mgrtests.models import TestCase, TestSuite, TestSuitesCases
 
 
@@ -108,6 +108,31 @@ def new_case(request):
         form = NewForm()
 
     return render(request, 'testMgr/newCase.html', {'form': form})
+
+
+@login_required
+def detail_case(request, pk):
+    item = get_object_or_404(TestCase, id=pk)
+
+    setattr(request, 'view', 'case')
+    setattr(request, 'title', 'Cases')
+
+    form = DetailForm(
+        initial={
+            'name': item.name,
+            'description': item.description,
+            'product': item.product,
+            'component': item.component,
+            'tag': item.tag,
+        }
+    )
+
+    form.fields['suites'].widget.attrs['disabled'] = True
+    form.fields['product'].widget.attrs['disabled'] = True
+    form.fields['component'].widget.attrs['disabled'] = True
+    form.fields['tag'].widget.attrs['disabled'] = True
+
+    return render(request, 'testMgr/detailCase.html', {'item': item, 'form': form})
 
 
 @login_required
