@@ -102,6 +102,11 @@ class DetailForm(forms.ModelForm):
         # help_text='The max length of the text is 2000.',
     )
 
+    actions = forms.MultipleChoiceField(
+        # widget=forms.SelectMultiple(attrs={'readonly': True})
+        widget=forms.SelectMultiple()
+    )
+
     class Meta:
         model = TestCase
         fields = ['name', 'description', 'suites', 'suite_select', 'product', 'component', 'tag', 'actions', 'expected', 'notes']

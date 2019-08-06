@@ -117,13 +117,27 @@ def detail_case(request, pk):
     setattr(request, 'view', 'case')
     setattr(request, 'title', 'Cases')
 
+    suites_cases = list(TestSuitesCases.objects.filter(case=item.id).values('suite'))
+    if len(suites_cases) > 0:
+        print(str(suites_cases[0].get('suite')))
+        suite = str(suites_cases[0].get('suite'))
+    else:
+        suite = ''
+
+    print(item.actions)
+    actions = item.actions[2:-2].split('\', \'')
+    print(actions[0])
+
     form = DetailForm(
         initial={
             'name': item.name,
             'description': item.description,
+            'suite_select': suite,
             'product': item.product,
             'component': item.component,
             'tag': item.tag,
+            'notes': item.notes,
+            'actions': actions,
         }
     )
 
@@ -131,6 +145,7 @@ def detail_case(request, pk):
     form.fields['product'].widget.attrs['disabled'] = True
     form.fields['component'].widget.attrs['disabled'] = True
     form.fields['tag'].widget.attrs['disabled'] = True
+    form.fields['actions'].widget.attrs['choices'] = actions
 
     return render(request, 'testMgr/detailCase.html', {'item': item, 'form': form})
 
