@@ -31,7 +31,7 @@ Test Tcms
                     <div class="col-lg-20 col-md-20 col-sm-20" style="width: 100%;">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">New</h5>
+                                <h5 class="card-title">{% block subTitle %}{% endblock %}</h5>
                                 <form method="post" novalidate {% block formParams %}{% endblock %}>
                                     {% csrf_token %}
 
