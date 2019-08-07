@@ -105,6 +105,45 @@ class DetailForm(forms.ModelForm):
     actions = forms.MultipleChoiceField(widget=forms.HiddenInput(), required=False)
     expected = forms.MultipleChoiceField(widget=forms.HiddenInput(), required=False)
 
+    created_by = forms.CharField(
+        widget=forms.TextInput(attrs={'readonly': True}),
+        label='Created by:'
+    )
+
+    created_at = forms.DateTimeField(label='Created at:')
+
+    updated_by = forms.CharField(
+        widget=forms.TextInput(attrs={'readonly': True}),
+        label='Created by:'
+    )
+
+    updated_at = forms.DateTimeField(label='Updated at:')
+
     class Meta:
         model = TestCase
-        fields = ['name', 'description', 'suites', 'suite_select', 'product', 'component', 'tag', 'actions', 'expected', 'notes']
+        fields = ['name', 'description', 'suites', 'suite_select', 'product', 'component', 'tag', 'actions', 'expected',
+                  'notes', 'created_by', 'created_at', 'updated_by', 'updated_at']
+
+
+class EditForm(forms.ModelForm):
+    suites = forms.CharField(
+        label='Suites:',
+        widget=forms.Select()
+    )
+    suite_select = forms.CharField(widget=forms.HiddenInput(), required=False)
+
+    class Meta:
+        model = TestCase
+        fields = ['name', 'description', 'suites', 'product', 'component', 'tag', 'actions', 'expected', 'notes']
+
+    def __init__(self, *args, **kwargs):
+        # first call parent's constructor
+        super(NewForm, self).__init__(*args, **kwargs)
+        # there's a `fields` property now
+        self.fields['suites'].required = False
+        self.fields['product'].required = False
+        self.fields['component'].required = False
+        self.fields['tag'].required = False
+        self.fields['notes'].required = False
+        self.fields['actions'].required = False
+        self.fields['expected'].required = False

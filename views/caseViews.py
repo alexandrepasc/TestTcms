@@ -124,6 +124,12 @@ def detail_case(request, pk):
     else:
         suite = ''
 
+    if item.updated_at is not None:
+        updated_at = get_datetime(item.updated_at)
+
+    else:
+        updated_at = ''
+
     form = DetailForm(
         initial={
             'name': item.name,
@@ -135,6 +141,10 @@ def detail_case(request, pk):
             'notes': item.notes,
             'actions': item.actions,
             'expected': item.expected,
+            'created_by': item.created_by,
+            'created_at': get_datetime(item.created_at),
+            'updated_by': item.updated_by,
+            'updated_at': updated_at
         }
     )
 
@@ -142,6 +152,8 @@ def detail_case(request, pk):
     form.fields['product'].widget.attrs['disabled'] = True
     form.fields['component'].widget.attrs['disabled'] = True
     form.fields['tag'].widget.attrs['disabled'] = True
+    form.fields['created_at'].widget.attrs['disabled'] = True
+    form.fields['updated_at'].widget.attrs['disabled'] = True
 
     return render(request, 'testMgr/detailCase.html', {'item': item, 'form': form})
 

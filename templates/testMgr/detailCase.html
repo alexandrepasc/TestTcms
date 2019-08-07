@@ -101,6 +101,27 @@ onload="loadData()"
     </div>
 </div>
 
+<div class="divTable" style="width: 100%;">
+    <div class="divTableRow">
+        <div class="divTableCell" style="width: 25%;">
+            {{ form.created_by.label_tag }}
+            {% render_field form.created_by class=form.created_by|input_class %}
+        </div>
+        <div class="divTableCell" style="width: 25%;">
+            {{ form.created_at.label_tag }}
+            {% render_field form.created_at class=form.created_at|input_class %}
+        </div>
+        <div class="divTableCell" style="width: 25%;">
+            {{ form.updated_by.label_tag }}
+            {% render_field form.updated_by class=form.updated_by|input_class %}
+        </div>
+        <div class="divTableCell" style="width: 25%;">
+            {{ form.updated_at.label_tag }}
+            {% render_field form.updated_at class=form.updated_at|input_class %}
+        </div>
+    </div>
+</div>
+
  <div class="divTable" style="width: 25%;">
     <div class="divTableRow">
         <div class="divTableCell" style="width: 50%;">
