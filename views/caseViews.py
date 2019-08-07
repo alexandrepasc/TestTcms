@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from common.utils import get_datetime, get_time_stamp
-from forms.caseForms import DetailForm, NewForm, SearchForm
+from forms.caseForms import DetailForm, EditForm, NewForm, SearchForm
 from mgrtests.models import TestCase, TestSuite, TestSuitesCases
 
 
@@ -156,6 +156,37 @@ def detail_case(request, pk):
     form.fields['updated_at'].widget.attrs['disabled'] = True
 
     return render(request, 'testMgr/detailCase.html', {'item': item, 'form': form})
+
+
+@login_required
+def edit_case(request, pk):
+    item = get_object_or_404(TestCase, id=pk)
+
+    setattr(request, 'view', 'case')
+    setattr(request, 'title', 'Cases')
+
+    suites_cases = list(TestSuitesCases.objects.filter(case=item.id).values('suite'))
+    if len(suites_cases) > 0:
+        print(str(suites_cases[0].get('suite')))
+        suite = str(suites_cases[0].get('suite'))
+    else:
+        suite = ''
+
+    form = EditForm(
+        initial={
+            'name': item.name,
+            'description': item.description,
+            'suite_select': suite,
+            'product': item.product,
+            'component': item.component,
+            'tag': item.tag,
+            'notes': item.notes,
+            'actions': item.actions,
+            'expected': item.expected,
+        }
+    )
+
+    return render(request, 'testMgr/editCase.html', {'item': item, 'form': form})
 
 
 @login_required

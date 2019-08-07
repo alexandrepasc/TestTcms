@@ -1,0 +1,171 @@
+{% extends 'testMgr/newBaseTemplate.html' %}
+
+{% load static %}
+
+{% block bodyParam %}
+onload="loadData()"
+{% endblock %}
+
+{% block subTitle %}Edit{% endblock %}
+
+{% block formContent %}
+
+{% load formTags widget_tweaks %}
+
+<div class="divTable" style="width: 100%;">
+    <div class="divTableRow">
+        <div class="divTableCell">
+
+            <div class="divTable">
+                <div class="divTableRow">
+                    <div class="divTableCell">
+                        {{ form.name.label_tag }}
+                        {% render_field form.name class=form.name|input_class %}
+                    </div>
+                </div>
+                <div class="divTableRow">
+                    <div class="divTableCell">
+                        {{ form.description.label_tag }}
+                        {% render_field form.description class=form.description|input_class %}
+                        <small class="form-text text-muted">
+                            {{ form.description.help_text|safe }}
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="divTableCell" style="width: 60%;">
+
+            <div class="divTable">
+                <div class="divTableRow">
+                    <div class="divTableCell">
+                        {{ form.suites.label_tag }}
+                        {% render_field form.suites class=form.suites|input_class %}
+                        {% render_field form.suite_select class=form.suite_select|input_class %}
+                    </div>
+                    <div class="divTableCell">
+                        {{ form.product.label_tag }}
+                        {% render_field form.product class=form.product|input_class %}
+                    </div>
+                </div>
+                <div class="divTableRow">
+                    <div class="divTableCell">
+                        {{ form.component.label_tag }}
+                        {% render_field form.component class=form.component|input_class %}
+                    </div>
+                    <div class="divTableCell">
+                        {{ form.tag.label_tag }}
+                        {% render_field form.tag class=form.tag|input_class %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="divTable">
+                <div class="divTableRow">
+                    <div class="divTableCell">
+                        {{ form.notes.label_tag }}
+                        {% render_field form.notes class=form.notes|input_class %}
+                        <small class="form-text text-muted">
+                            {{ form.notes.help_text|safe }}
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="divTable" style="width: 100%;">
+    <div class="divTableRow">
+        <div class="divTableCell">
+        </div>
+    </div>
+    <div class="divTableRow">
+        <div class="divTableCell">
+        </div>
+    </div>
+    <div class="divTableRow" style="border-top: 1px solid rgba(0, 0, 0, .1)">
+        <div class="divTableCell">
+        </div>
+    </div>
+    <div class="divTableRow">
+        <div class="divTableCell">
+        </div>
+    </div>
+</div>
+
+<div class="divTable" style="width: 100%;">
+    <div class="divTableRow">
+        <div class="divTableCell" style="width: 45%;">
+            {{ form.actions.label_tag }}
+            {% render_field form.actions class=form.actions|input_class %}
+            <div class="invalid-feedback" id="div_actions"></div>
+        </div>
+         <div class="divTableCell" style="width: 45%;">
+            {{ form.expected.label_tag }}
+            {% render_field form.expected class=form.expected|input_class %}
+             <div class="invalid-feedback" id="div_expected"></div>
+         </div>
+        <div class="divTableCell" style="vertical-align:bottom; width: 10%;">
+            <button class="btn btn-primary" type="button" onclick="addStep()">Add</button>
+            <div class="invalid-feedback" id="adjust">&nbsp;</div>
+         </div>
+    </div>
+    <div class="divTableRow">
+        <div class="divTableCell">
+            <select id="list_actions" multiple="multiple" style="width:100%; height:400px;" disabled>
+            </select>
+        </div>
+        <div class="divTableCell">
+            <select id="list_expected" multiple="multiple" style="width:100%; height:400px;" disabled>
+            </select>
+        </div>
+        <div class="divTableCell">
+        </div>
+    </div>
+</div>
+<div class="divTable" style="width: 25%;">
+    <div class="divTableRow">
+        <div class="divTableCell" style="width: 33%;">
+            <button type="submit" class="btn btn-success">Add</button>
+        </div>
+        <div class="divTableCell" style="width: 33%;">
+            <button class="btn btn-primary" type="button" onclick="openItemTemplate('editCase', '{{ item.id }}')">Clear</button>
+        </div>
+        <div class="divTableCell" style="width: 33%;">
+            <button type="button" class="btn btn-danger" onclick="openItemTemplate('detailCase', '{{ item.id }}')">Cancel</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script2 %}
+<script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+<script src="{% static 'js/getSuites.js' %}"></script>
+<script>
+    function loadData() {
+        getSuites();
+
+        var actionHidden = document.getElementById('id_actions').value.
+            substring(2, document.getElementById('id_actions').value.length - 2).split("', '");
+        var expectedHidden = document.getElementById('id_expected').value.
+            substring(2, document.getElementById('id_expected').value.length - 2).split("', '");
+
+        for (var i = 0; i < actionHidden.length; i++) {
+            if (i == actionHidden.length - 1) {
+                var select = " selected";
+            } else {
+                var select = "";
+            }
+            $("#list_actions").append('<option value="' + actionHidden[i] + '">' + actionHidden[i] + '</option>');
+            $("#list_expected").append('<option value="' + expectedHidden[i] + '">' + expectedHidden[i] + '</option>');
+        }
+
+        document.getElementById('id_actions').value = "";
+        document.getElementById('id_expected').value = "";
+    }
+</script>
+{% endblock %}

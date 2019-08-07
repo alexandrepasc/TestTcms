@@ -9,5 +9,7 @@ urlpatterns = [
     url(r'^newCase/$', caseViews.new_case, name='newCase'),
     url(r'^detailCase/(?P<pk>[0-9a-f-]+)$', caseViews.detail_case, name='detailCase'),
     url(r'^detailCase/(?P<pk>[0-9a-f-]+)/$', caseViews.detail_case, name='detailCase'),
+    url(r'^editCase/(?P<pk>[0-9a-f-]+)$', caseViews.edit_case, name='editCase'),
+    url(r'^editCase/(?P<pk>[0-9a-f-]+)/$', caseViews.edit_case, name='editCase'),
     url(r'^ajax/getSuites/$', caseViews.get_suites, name='getSuites'),
 ]

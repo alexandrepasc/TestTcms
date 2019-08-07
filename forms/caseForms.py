@@ -126,19 +126,50 @@ class DetailForm(forms.ModelForm):
 
 
 class EditForm(forms.ModelForm):
+    name = forms.CharField(
+        widget=forms.TextInput(),
+        max_length=30
+    )
+
+    description = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 5, 'placeholder': 'Suite description'}),
+        max_length=100,
+        help_text='The max length of the text is 100.',
+    )
+
+    suites = forms.CharField(
+        label='Suites:',
+        widget=forms.Select()
+    )
+
     suites = forms.CharField(
         label='Suites:',
         widget=forms.Select()
     )
     suite_select = forms.CharField(widget=forms.HiddenInput(), required=False)
 
+    notes = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 5}),
+        max_length=2000,
+        help_text='The max length of the text is 2000.',
+    )
+
+    actions = forms.CharField(
+        max_length=50
+    )
+
+    expected = forms.CharField(
+        max_length=50
+    )
+
     class Meta:
         model = TestCase
-        fields = ['name', 'description', 'suites', 'product', 'component', 'tag', 'actions', 'expected', 'notes']
+        fields = ['name', 'description', 'suites', 'suite_select', 'product', 'component', 'tag', 'actions',
+                  'expected', 'notes']
 
     def __init__(self, *args, **kwargs):
         # first call parent's constructor
-        super(NewForm, self).__init__(*args, **kwargs)
+        super(EditForm, self).__init__(*args, **kwargs)
         # there's a `fields` property now
         self.fields['suites'].required = False
         self.fields['product'].required = False
