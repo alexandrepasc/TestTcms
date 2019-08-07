@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block bodyParam %}
-onload="getSuites()"
+onload="loadData()"
 {% endblock %}
 
 {% block subTitle %}Detail{% endblock %}
@@ -79,11 +79,25 @@ onload="getSuites()"
 <div class="divTable" style="width: 100%;">
     <div class="divTableRow">
         <div class="divTableCell" style="width: 45%;">
-            {{ form.actions.label_tag }}
             {% render_field form.actions class=form.actions|input_class %}
             <div class="invalid-feedback" id="div_actions"></div>
         </div>
-
+        <div class="divTableCell" style="width: 45%;">
+            {% render_field form.expected class=form.expected|input_class %}
+            <div class="invalid-feedback" id="div_expected"></div>
+        </div>
+    </div>
+    <div class="divTableRow">
+        <div class="divTableCell">
+            {{ form.actions.label_tag }}
+            <select id="list_actions" multiple="multiple" style="width:100%; height:400px;" disabled>
+            </select>
+        </div>
+        <div class="divTableCell">
+            {{ form.expected.label_tag }}
+            <select id="list_expected" multiple="multiple" style="width:100%; height:400px;" disabled>
+            </select>
+        </div>
     </div>
 </div>
 
@@ -94,7 +108,10 @@ onload="getSuites()"
                     onclick="openItemTemplate('editCase', '{{ item.id }}')">Edit</button>
         </div>
         <div class="divTableCell" style="width: 50%;">
-            <button type="button" class="btn btn-danger" onclick="openTemplate('case')">Back</button>
+            <button type="button" class="btn btn-primary" onclick="openTemplate('case')">Back</button>
+        </div>
+        <div class="divTableCell" style="width: 50%;">
+            <button class="btn btn-danger" onclick="deleting()">Delete</button>
         </div>
     </div>
 </div>
@@ -104,4 +121,24 @@ onload="getSuites()"
 {% block script2 %}
 <script src="{% static 'js/jquery-3.4.1.js' %}"></script>
 <script src="{% static 'js/getSuites.js' %}"></script>
+<script>
+    function loadData() {
+        getSuites();
+
+        var actionHidden = document.getElementById('id_actions').value.
+            substring(2, document.getElementById('id_actions').value.length - 2).split("', '");
+        var expectedHidden = document.getElementById('id_expected').value.
+            substring(2, document.getElementById('id_expected').value.length - 2).split("', '");
+
+        for (var i = 0; i < actionHidden.length; i++) {
+            if (i == actionHidden.length - 1) {
+                var select = " selected";
+            } else {
+                var select = "";
+            }
+            $("#list_actions").append('<option value="' + actionHidden[i] + '">' + actionHidden[i] + '</option>');
+            $("#list_expected").append('<option value="' + expectedHidden[i] + '">' + expectedHidden[i] + '</option>');
+        }
+    }
+</script>
 {% endblock %}

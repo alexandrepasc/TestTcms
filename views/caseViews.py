@@ -124,10 +124,6 @@ def detail_case(request, pk):
     else:
         suite = ''
 
-    print(item.actions)
-    actions = item.actions[2:-2].split('\', \'')
-    print(actions[0])
-
     form = DetailForm(
         initial={
             'name': item.name,
@@ -137,7 +133,8 @@ def detail_case(request, pk):
             'component': item.component,
             'tag': item.tag,
             'notes': item.notes,
-            'actions': actions,
+            'actions': item.actions,
+            'expected': item.expected,
         }
     )
 
@@ -145,7 +142,6 @@ def detail_case(request, pk):
     form.fields['product'].widget.attrs['disabled'] = True
     form.fields['component'].widget.attrs['disabled'] = True
     form.fields['tag'].widget.attrs['disabled'] = True
-    form.fields['actions'].widget.attrs['choices'] = actions
 
     return render(request, 'testMgr/detailCase.html', {'item': item, 'form': form})
 
