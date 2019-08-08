@@ -126,7 +126,6 @@ def detail_case(request, pk):
 
     if item.updated_at is not None:
         updated_at = get_datetime(item.updated_at)
-
     else:
         updated_at = ''
 
@@ -165,26 +164,79 @@ def edit_case(request, pk):
     setattr(request, 'view', 'case')
     setattr(request, 'title', 'Cases')
 
-    suites_cases = list(TestSuitesCases.objects.filter(case=item.id).values('suite'))
-    if len(suites_cases) > 0:
-        print(str(suites_cases[0].get('suite')))
-        suite = str(suites_cases[0].get('suite'))
-    else:
-        suite = ''
+    identification = item.id
 
-    form = EditForm(
-        initial={
-            'name': item.name,
-            'description': item.description,
-            'suite_select': suite,
-            'product': item.product,
-            'component': item.component,
-            'tag': item.tag,
-            'notes': item.notes,
-            'actions': item.actions,
-            'expected': item.expected,
-        }
-    )
+    if request.method == 'POST':
+        form = EditForm(request.POST)
+
+        if form.is_valid():
+            item = form.save(commit=False)
+
+            if request.POST.get('actions') != '':
+                aux_actions = request.POST.get('actions')[:-1].split('£,')
+                aux_expected = request.POST.get('expected')[:-1].split('£,')
+            else:
+                aux_actions = None
+                aux_expected = None
+
+            if request.POST.get('notes') == '':
+                item.notes = None
+
+            obj = TestCase.objects.filter(name=item.name, description=item.description,
+                                          product=item.product, component=item.component, tag=item.tag,
+                                          notes=item.notes, actions=aux_actions, expected=aux_expected)
+
+            if not obj:
+                TestCase.objects.filter(id=identification).update(
+                    name=item.name,
+                    description=item.description,
+                    product=item.product,
+                    component=item.component,
+                    tag=item.tag,
+                    notes=item.notes,
+                    actions=aux_actions,
+                    expected=aux_expected,
+                    updated_by=request.user,
+                    updated_at=get_time_stamp()
+                )
+                print('update case')
+
+            suites_cases = list(TestSuitesCases.objects.filter(case=item.id).values('suite'))
+            if len(suites_cases) > 0:
+                suite_id = str(suites_cases[0].get('suite'))
+                print(suite_id)
+
+                if suite_id != request.POST.get('suites'):
+                    suite = TestSuite.objects.filter(id=suite_id)
+                    print(suite)
+                    TestSuitesCases.objects.filter(case=identification).update(suite=suite_id)
+                    TestCase.objects.filter(id=identification).update(updated_by=request.user,
+                                                                      updated_at=get_time_stamp())
+                    print('update suite')
+
+        return redirect('/detailCase/' + str(identification) + '/')
+
+    else:
+        suites_cases = list(TestSuitesCases.objects.filter(case=item.id).values('suite'))
+        if len(suites_cases) > 0:
+            # print(str(suites_cases[0].get('suite')))
+            suite = str(suites_cases[0].get('suite'))
+        else:
+            suite = ''
+
+        form = EditForm(
+            initial={
+                'name': item.name,
+                'description': item.description,
+                'suite_select': suite,
+                'product': item.product,
+                'component': item.component,
+                'tag': item.tag,
+                'notes': item.notes,
+                'actions': item.actions,
+                'expected': item.expected,
+            }
+        )
 
     return render(request, 'testMgr/editCase.html', {'item': item, 'form': form})
 

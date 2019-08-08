@@ -6,6 +6,10 @@
 onload="loadData()"
 {% endblock %}
 
+{% block formParams %}
+onsubmit="toJson()"
+{% endblock %}
+
 {% block subTitle %}Edit{% endblock %}
 
 {% block formContent %}
@@ -129,7 +133,7 @@ onload="loadData()"
 <div class="divTable" style="width: 25%;">
     <div class="divTableRow">
         <div class="divTableCell" style="width: 33%;">
-            <button type="submit" class="btn btn-success">Add</button>
+            <button type="submit" class="btn btn-success">Save</button>
         </div>
         <div class="divTableCell" style="width: 33%;">
             <button class="btn btn-primary" type="button" onclick="openItemTemplate('editCase', '{{ item.id }}')">Clear</button>
@@ -166,6 +170,49 @@ onload="loadData()"
 
         document.getElementById('id_actions').value = "";
         document.getElementById('id_expected').value = "";
+    }
+</script>
+<script>
+    function toJson() {
+        var countA = 0;
+        var countE = 0;
+        var actionsJson;
+        var expectedJson;
+
+        if (document.getElementById("list_actions").childElementCount > 0) {
+            actionsJson = []; /*new Array(document.getElementById("list_actions").childElementCount);*/
+            expectedJson = []; /*new Array(document.getElementById("list_actions").childElementCount);*/
+
+            document.getElementById("list_actions").childNodes.forEach(
+                function(element) {
+                    if (countA > 0) {
+                        actionsJson[countA - 1] = element.value + "£";
+
+                    }
+                    countA = countA + 1;
+                }
+            );
+
+            //count = 0;
+
+            document.getElementById("list_expected").childNodes.forEach(
+                function(element) {
+                    if (countE > 0) {
+                        expectedJson[countE - 1] = element.value + "£";
+
+                    }
+                    countE = countE + 1;
+                }
+            );
+
+            document.getElementById("id_actions").value = actionsJson;
+            document.getElementById("id_expected").value = expectedJson;
+        }
+
+
+
+        console.log(actionsJ);
+        return false;
     }
 </script>
 {% endblock %}

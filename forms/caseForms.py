@@ -114,7 +114,7 @@ class DetailForm(forms.ModelForm):
 
     updated_by = forms.CharField(
         widget=forms.TextInput(attrs={'readonly': True}),
-        label='Created by:'
+        label='Updated by:'
     )
 
     updated_at = forms.DateTimeField(label='Updated at:')
