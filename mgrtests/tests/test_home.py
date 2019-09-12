@@ -10,4 +10,4 @@ class TestHome(TestCase):
 
     def test_home_status(self):
         response = self.client.get(self.path)
-        assert response.status_code == 200
+        assert response.status_code == 302
